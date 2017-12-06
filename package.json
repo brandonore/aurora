@@ -1,0 +1,16 @@
+{
+  "name": "aurora",
+  "version": "1.0.0",
+  "description": "Real time updates on your favorite cryptocurrencies!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Brandon Ore",
+  "license": "MIT",
+  "dependencies": {
+    "electron-prebuilt": "^1.4.13",
+    "open": "0.0.5",
+    "request": "^2.83.0"
+  }
+}

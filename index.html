@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crypto Ticker</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700,800" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700" rel="stylesheet"> 
+    <script src="https://use.fontawesome.com/1d94b74862.js"></script>
+
+    <!-- <link rel="stylesheet" href="css/lib/rangefill.css"> -->
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Menu bar -->
+        <div class="section group row-menu drag">
+            <div class="col span_12_of_12 menu">
+                <i class="fa fa-info-circle toggle-overlay3 info-icon" aria-hidden="true" title="About"></i>
+                <i class="fa fa-cog toggle-overlay2 cog-icon" aria-hidden="true" title="Settings"></i>
+                <i class="fa fa-refresh" aria-hidden="true" title="Reset the app if it appears frozen"></i>
+                <i class="fa fa-window-minimize" aria-hidden="true" title="Minimize"></i>
+                <i class="fa fa-window-close" aria-hidden="true" title="Close"></i>
+            </div>
+        </div>
+
+        <!-- Row1 -->
+        <div class="section group row1">
+            <div class="col span_4_of_12 logo"><span class="coin-picture"></span></div>
+            <div class="col span_8_of_12 coin-info">
+                <h2><span class="coin-name"></span></h2>
+                <span class="coin-price"></span>
+                <span class="currency-small"></span>
+                <span class="percent-change"></span>
+                <span class="percent-time"></span>
+            </div>
+        </div>
+
+        <!-- Row2 -->
+        <div class="section group row2">
+            <div class="col span_4_of_12 div-rank"><p>Rank</p><span class="coin-rank"></span></div>
+            <div class="col span_4_of_12 div-volume"><p>Volume (24hr)</p><span class="coin-volume"></span><span class="currency-small"></span></div>
+            <div class="col span_4_of_12 div-mcap"><p>Market Cap</p><span class="coin-mcap"></span><span class="currency-small"></span></div>
+        </div>
+
+        <!-- Row3 -->
+        <div class="section group row3">
+            <div class="col span_12_of_12 search-row styled-input">
+                <input type="text" required id="search-input" title=""/>
+                <label>Search...</label>
+                <span></span>
+                <i class="fa fa-times search-close" aria-hidden="true"></i>
+            </div>
+            <div class="search section group">
+                <table class="search-table"></table>
+            </div>
+        </div>
+
+        <i id="compact-btn" class="fa fa-compress" aria-hidden="true" title="Compact mode"></i>
+
+        <!-- Compact mode -->
+        <!-- <div class="section group row1-compact">
+            <div class="col span_12_of_12"><span class="coin-picture"></span></div>
+        </div>
+        <div class="section group row2-compact">
+            <div class="col span_12_of_12">
+                <span class="coin-name coin-name-small"></span>
+            </div>
+            <div class="col span_12_of_12">
+                <span class="coin-price"></span>
+                <span class="percent-change"></span>
+            </div>
+        </div> -->
+
+        <!-- Settings overlay -->
+        <aside class="a2">
+            <i class="fa fa-times outer-close toggle-overlay2" aria-hidden="true"></i>
+            <div class="section group convert-row">
+                <h3>Satoshi to USD</h3>
+                <div class="col span_12_of_12 styled-input sat-inputs">
+                    <input type="text" id="convert-input">
+                    <input type="text" id="convert-display">
+                </div>
+            </div>
+             
+            <div class="section group themes-row">
+                <h3 class="col span_6_of_12">Themes</h3> 
+                <div class="col span_3_of_12 theme">Dark</div>
+                <div class="col span_3_of_12 theme">Light</div>
+            </div>
+
+            <div class="section group slider-row">
+                <div class="col span_3_of_12 opacity-text">Opacity:</div>
+                <div class="col span_8_of_12 opacity-slider"><input type="range" min="0" max="1" value="1" step="0.01" id="oSlider"></div>
+            </div>
+        </aside>
+        
+        <!-- Donation overlay -->
+        <aside class="a3">
+            <i class="fa fa-times outer-close toggle-overlay3" aria-hidden="true"></i>
+            <div class="section group donate-row">
+                <div class="col span_12_of_12 donate-header"><h3>Like the app? Feel free to donate!</h3></div>
+                <div class="col span_4_of_12 about-blurb">
+                    Developed by:<br><a href="https://github.com/brandonore">Brandon Ore</a> Libraries used: 
+                    <a href="https://www.npmjs.com/package/electron">electron</a>, <a href="https://www.npmjs.com/package/request">request</a>  
+                </div>
+                <div class="col span_4_of_12 div-qr"><span><img src="src/img/btc-qr.png" alt="" class="qrcode"></span></div>
+                <span class="version-info">Version 1.0.0</span>
+                <div class="col span_4_of_12 select div-donate-list">
+                    <select name="donate" class="donate-list">
+                            <option value="btc">Bitcoin</option>
+                            <option value="eth">Ethereum</option>
+                            <option value="ltc">Litecoin</option>
+                    </select>
+                </div>
+                <div class="col span_12_of_12 donate-address"><span>15As8L4n1Z2oyw9UfsTpfC4KR9Q7h8eUNL</span></div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>window.jQuery = window.$ = module.exports</script>
+    <!-- <script src="js/lib/rangefill.js"></script> -->
+    <script src="src/js/app.js"></script>
+</body>
+</html>
