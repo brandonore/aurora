@@ -7,6 +7,7 @@
     <title>Crypto Ticker</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700,800" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700" rel="stylesheet"> 
+    <link href="src/css/lib/fontawesome-all.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/1d94b74862.js"></script>
 
     <!-- <link rel="stylesheet" href="css/lib/rangefill.css"> -->
@@ -18,11 +19,11 @@
         <!-- Menu bar -->
         <div class="section group row-menu drag">
             <div class="col span_12_of_12 menu">
-                <i class="fa fa-info-circle toggle-overlay3 info-icon" aria-hidden="true" title="About"></i>
-                <i class="fa fa-cog toggle-overlay2 cog-icon" aria-hidden="true" title="Settings"></i>
-                <i class="fa fa-refresh" aria-hidden="true" title="Reset the app if it appears frozen"></i>
-                <i class="fa fa-window-minimize" aria-hidden="true" title="Minimize"></i>
-                <i class="fa fa-window-close" aria-hidden="true" title="Close"></i>
+                <i class="fal fa-info-circle toggle-overlay3 info-icon" aria-hidden="true" title="About"></i>
+                <i class="fal fa-cog toggle-overlay2 cog-icon" aria-hidden="true" title="Settings"></i>
+                <i class="fal fa-refresh" aria-hidden="true" title="Reset the app if it appears frozen"></i>
+                <i class="fal fa-minus" aria-hidden="true" title="Minimize"></i>
+                <i class="fal fa-times mClose" aria-hidden="true" title="Close"></i>
             </div>
         </div>
 
@@ -48,35 +49,19 @@
         <!-- Row3 -->
         <div class="section group row3">
             <div class="col span_12_of_12 search-row styled-input">
-                <input type="text" required id="search-input" title=""/>
+                <input type="text" required id="search-input" maxlength="40" title=""/>
                 <label>Search...</label>
                 <span></span>
-                <i class="fa fa-times search-close" aria-hidden="true"></i>
+                <i class="far fa-times-circle search-close" aria-hidden="true"></i>
             </div>
             <div class="search section group">
                 <table class="search-table"></table>
             </div>
         </div>
 
-        <i id="compact-btn" class="fa fa-compress" aria-hidden="true" title="Compact mode"></i>
-
-        <!-- Compact mode -->
-        <!-- <div class="section group row1-compact">
-            <div class="col span_12_of_12"><span class="coin-picture"></span></div>
-        </div>
-        <div class="section group row2-compact">
-            <div class="col span_12_of_12">
-                <span class="coin-name coin-name-small"></span>
-            </div>
-            <div class="col span_12_of_12">
-                <span class="coin-price"></span>
-                <span class="percent-change"></span>
-            </div>
-        </div> -->
-
         <!-- Settings overlay -->
         <aside class="a2">
-            <i class="fa fa-times outer-close toggle-overlay2" aria-hidden="true"></i>
+            <i class="fal fa-times outer-close toggle-overlay2" aria-hidden="true"></i>
             <div class="section group convert-row">
                 <h3>Satoshi to USD</h3>
                 <div class="col span_12_of_12 styled-input sat-inputs">
@@ -99,7 +84,7 @@
         
         <!-- Donation overlay -->
         <aside class="a3">
-            <i class="fa fa-times outer-close toggle-overlay3" aria-hidden="true"></i>
+            <i class="fal fa-times outer-close toggle-overlay3" aria-hidden="true"></i>
             <div class="section group donate-row">
                 <div class="col span_12_of_12 donate-header"><h3>Like the app? Feel free to donate!</h3></div>
                 <div class="col span_4_of_12 about-blurb">

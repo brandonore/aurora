@@ -15,11 +15,7 @@ body {
   width: 400px;
   background: rgba(67, 77, 90, 1);
   border-radius: 6px;
-  /* border-left: 4px solid #25DAA5;
-  -webkit-transition: border-left 0.5s ease-in-out;
-  transition: border-left 3s ease-in-out; */
   color: rgba(255, 255, 255, 0.75);
-  /* font-family: 'Raleway', sans-serif; */
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -56,7 +52,6 @@ a:hover, a:active {
 }
 
 /*  Sections/Grid ======================================================================*/
-
 .drag {
   -webkit-app-region: drag;
   -webkit-user-select: none;
@@ -120,42 +115,6 @@ a:hover, a:active {
 .span_1_of_12 { width: 6.866%; }
 
 /* Main styles ====================================================================== */
-
-/* .row-menu, .row1, .row2, .row3 {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.row1-compact, .row2-compact {
-  position: absolute;
-  width: 100%;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.row1-compact {
-  top: 17px;
-  left: 40px;
-}
-
-.row2-compact {
-  top: 97px;
-  left: 13px;
-}
-
-.row2-compact div {
-  margin: 0 auto;
-}
-
-.compact-btn-move {
-  top: 7px;
-  left: 124px;
-}
-
-.coin-name-small {
-  font-size: .6em;
-} */
-
 .logo {
   text-align: center;
   padding-top: 8px;
@@ -225,19 +184,15 @@ h2 {
 }
 
 /* Menu bar and icons */
-.row-menu {
-  margin-bottom: 4px;
-}
-
 .menu {
   margin: 0 auto;
   text-align: right;
-  /* border-bottom: solid 1px rgb(38, 44, 51); */
-  padding: 3px 0;
-  box-shadow: -1px 1px 3px rgba(43, 50, 58, 1);
+  background: rgba(38, 44, 51, 1);
+  /* border-bottom: solid 1px #25DAA5; */
+  padding: 5px 0;
 }
 
-.fa-window-minimize, .fa-window-close {
+.fa-minus, .mClose {
   position: relative;
   font-size: 18px;
   cursor: pointer;
@@ -245,32 +200,36 @@ h2 {
 }
 
 .cog-icon, .info-icon, .fa-refresh {
-  right: 287px;
+  right: 280px;
   position: relative;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   transition: all .1s ease-in-out;
+  padding: 0 1px;
 }
 
-.fa-search:hover, .fa-cog:hover, .fa-info-circle:hover, .fa-times:hover, 
-.fa-window-minimize:hover, .fa-refresh:hover, .fa-compress:hover {
+.fa-minus:hover {
+  font-weight: 500;
+}
+
+.fa-cog:hover, .fa-info-circle:hover, .fa-refresh:hover {
   font-weight: bold;
 }
 
-.fa-window-close:hover {
-  font-weight: bold;
+.mClose:hover {
+  font-weight: 500;
   color: rgb(245, 56, 103);
 }
 
-.fa-window-close {
+.mClose {
   margin-right: 8px;
+  margin-left: 6px;
   transition: all .15s ease-in-out;
 }
 
 /* Search main */
 .search-row {
   margin: 0 auto;
-  /* background: gray; */
 }
 
 /* Overlay ====================================================================== */
@@ -286,7 +245,6 @@ h2 {
 	opacity: 0;
   visibility: hidden;
   border-radius: 6px;
-  /* border-left: 4px solid #BD77F2; */
 }
 
 .open {
@@ -351,7 +309,6 @@ input:focus ~ span {
 } 
 
 /* Settings overlay ====================================================================== */
-
 h3 {
   text-align: center;
   margin-bottom: 10px;
@@ -433,9 +390,6 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]:focus {
   outline: none;
 }
-/* input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #ccc;
-} */
 
 /* Search overlay ====================================================================== */
 .search {
@@ -452,7 +406,6 @@ input[type=range]:focus {
 }
 
 .search #row div {
-  /* margin: 0 auto; */
   margin-left: 0;
   height: 20px;
 }
@@ -499,23 +452,18 @@ input[type=range]:focus {
   display: none;
   position: absolute;
   -webkit-text-stroke: .1px #25DAA5;
-  top: 172px;
+  top: 175px;
   left: 376px;
-  font-size: 22px;
+  font-size: 18px;
   color: #25DAA5;
   z-index: 3;
-  cursor: pointer;
-}
-
-#compact-btn {
-  position: absolute;
-  top: 172px;
-  left: 374px;
-  font-size: 20px;
   cursor: pointer;
   transition: all .1s ease-in-out;
 }
 
+.search-close:hover {
+  font-weight: 600;
+}
 
 /* Donate overlay ====================================================================== */
 .div-qr {
@@ -566,10 +514,8 @@ select {
 .select {
   position: relative;
   top: 17px;
-  /* left: 270px; */
   width: 6.2em;
   height: 1.4em;
-  /* line-height: 3; */
   background: #434D5A;
   overflow: hidden;
   border-radius: 3px;

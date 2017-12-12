@@ -7,24 +7,23 @@ const electron = require('electron');
 const shell = electron.shell;
 const {ipcRenderer} = electron;
 const { remote } = require('electron');
-var win = remote.getCurrentWindow();
+let win = remote.getCurrentWindow();
 
-let popList, searchContainer = [];
-let rank, id, name, symbol, price, volume, mcap, perChange, per1h, check, selectedCoin, btcPrice, text;
-let clickedValue = "bitcoin";
-let currency = ' USD';
 const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins/16x16/';
 const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/64x64/';
 const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
-
+let popList, searchContainer = [];
+let rank, id, name, symbol, price, volume, mcap, perChange, per1h, check, selectedCoin, btcPrice, text;
+let clickedValue = "bitcoin";
+let currency = ' USD';
 
 // minimize, close, refresh app
-$('.fa-window-minimize').on('click', function() {
+$('.fa-minus').on('click', function() {
     win.minimize();
 });
 
-$('.fa-window-close').on('click', function() {
+$('.mClose').on('click', function() {
     win.close();
 });
 
@@ -87,8 +86,6 @@ toggleOverlays('.toggle-overlay3', '.a3');
 donate();
 satoshiUSD();
 opacity();
-//fadeColor(".main-container", ["#25DAA5", "#F27793", "#BD77F2"], 3000);
-
 
 /*---------------------------------------
 * Functions
@@ -189,8 +186,8 @@ function fillPricePercent(change, color) {
             $('.coin-price').text('$' + price).fadeIn('fast');
             $('.percent-change').text('(' + per1h + '%)').fadeIn('fast');
             $('.percent-time').text('1hr').fadeIn('fast');
-        });
-        $('.coin-price, .percent-change').css('color', color);
+            $('.coin-price, .percent-change').css('color', color);
+        });     
     }   
 }
 
@@ -256,7 +253,8 @@ function satoshiUSD() {
 function opacity() {
     oSlider.on('input', function() {
         $('.main-container, .a1, .a2, .a3').css("background", "rgba(67, 77, 90, " + $(this).val() + ")");
-        $('.menu').css("box-shadow", "-1px 1px 3px rgba(43, 50, 58, " + $(this).val() + ")");
+        // $('.menu').css("box-shadow", "-1px 1px 3px rgba(43, 50, 58, " + $(this).val() + ")");
+        $('.menu').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
     });
 }
 
@@ -277,17 +275,7 @@ function donate() {
     });
 }
 
-// fade border left on main-container
-// function fadeColor(selector, colors, time) {
-//     var curColor = 0,
-//         timer = setInterval(function() {
-//             if(curColor === colors.length) {
-//                 curColor = 0;
-//             }
-//             $(selector).css("border-left", "4px solid " + colors[curColor]);
-//             curColor++
-//         }, time);
-// }
+
 
 // clear #search-input val
 function clearSearch() {

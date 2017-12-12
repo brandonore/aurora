@@ -19,9 +19,6 @@ function createWindow () {
     slashes: true
   }))
 
-  
-  // win.setSize(400, 900);
-
   // Open the DevTools.
   win.webContents.openDevTools()
 
@@ -55,7 +52,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// ipcMain.on('minimize-window', function() {
-//   win.minimize();
-// });
