@@ -14,7 +14,7 @@ const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/
 const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
 let popList, searchContainer = [];
-let rank, id, name, symbol, price, volume, mcap, perChange, per1h, check, selectedCoin, btcPrice, text;
+let rank, id, name, symbol, price, volume, mcap, perChange, per1h, availSup, totalSup, check, selectedCoin, btcPrice, text;
 let clickedValue = "bitcoin";
 let currency = ' USD';
 
@@ -31,17 +31,46 @@ $('.fa-refresh').on('click', function() {
     win.reload();
 });
 
+// toggle supply on click
+$('.row2 p, .row2 span').on('click', function() {
+    toggleSupply();
+});
+
 // search on key up
 $('#search-input').keyup(function() {
     searchList();
 });
 
 // show/hide .search list
-$('#search-input').focus( function() {
+$('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
     $('#compact-btn').hide();
 
+});
+
+// check theme switch, toggle dark/light mode
+$('#switch1').click(function() {
+    if($('body').hasClass('dark-mode')) {
+        $('body').removeClass('dark-mode');
+        $('body').addClass('light-mode');
+        resetOpacity('light');
+    } else {
+        $('body').removeClass('light-mode');
+        $('body').addClass('dark-mode');
+        resetOpacity('dark');
+    }
+});
+
+// focus action for satoshi convert
+$('#convert-input').focus(function() {
+    $(this).css('border-bottom', 'solid 1px var(--colored-elements)');
+    $(this).removeAttr('placeholder');
+});
+
+$('#convert-input').focusout(function() {
+    $(this).css('border-bottom', 'solid 1px var(--main-text)');
+    $(this).attr('placeholder');
 });
 
 // clear search
@@ -56,7 +85,7 @@ $(document).on('click', 'a[href^="http"]', function(event) {
 });
 
 // make API call
-request('https://api.coinmarketcap.com/v1/ticker/?limit=1000', (error, response, body) => {
+request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response, body) => {
     if(!error && response.statusCode == 200) {
         popList = JSON.parse(body);
         populateData();
@@ -81,8 +110,8 @@ setInterval(() => {
 }, 180000); // upate main every 3min
 
 // call funcs 
-toggleOverlays('.toggle-overlay2', '.a2');
-toggleOverlays('.toggle-overlay3', '.a3');
+showOverlays('.fa-cog', '.a2', 300);
+showOverlays('.fa-info-circle', '.a3', 300);
 donate();
 satoshiUSD();
 opacity();
@@ -91,16 +120,30 @@ opacity();
 * Functions
 * ---------------------------------------*/
 
-// toggle settings/donation overlays
-function toggleOverlays(overlay, aside) {
-    $(overlay).on('click', function() {
-        $('.search, .search-close').hide();
-        $('.main-container').css('height', '200px');
-        $(aside).toggleClass('open');
-        $('.row-menu, .row1, .row2, .row3').toggleClass('hide-main');
-        if(overlay === '.toggle-overlay2') {
-            $('#convert-input, #convert-display').val("");
-        }  
+// handle overlays for settings/about
+function showOverlays(icon, overlay, speed) {
+    let x = false;
+    $(icon).on('click', function() {
+        if(!x) {
+            $(overlay).stop().animate({
+                left: 0
+            }, speed, function() {
+                $('.row1, .row2, .row3').toggleClass('hide-main');
+                $('.main-container').css('height', '200px');
+            });
+            x = true;
+        } else {
+            $(overlay).stop().animate({
+                left: -401
+            }, speed, function() {
+                $('.row1, .row2, .row3').toggleClass('hide-main');
+                clearSearch();
+                if(overlay === '.a2') {
+                    $('#convert-input, #convert-display').val("");
+                }
+            });
+            x = false;
+        }
     });
 }
 
@@ -143,21 +186,22 @@ function refreshMain() {
 
 // pull info for main screen
 function mainInfo(arr) {
-    [name, id, symbol, price, rank, volume, mcap, perChange, per1h] = [
+    [name, id, symbol, price, rank, volume, mcap, perChange, per1h, availSup, totalSup] = [
         arr[0]["name"], arr[0]["id"], arr[0]["symbol"], arr[0]["price_usd"],
-        arr[0]["rank"], mFormat(arr[0]["24h_volume_usd"]), mFormat(arr[0]["market_cap_usd"]), 
-        Math.sign(Number(arr[0]["percent_change_1h"])), arr[0]["percent_change_1h"]
+        arr[0]["rank"], nFormat('$', arr[0]["24h_volume_usd"]), nFormat('$', arr[0]["market_cap_usd"]), 
+        Math.sign(Number(arr[0]["percent_change_1h"])), arr[0]["percent_change_1h"], nFormat("", arr[0]["available_supply"]),
+        nFormat("", arr[0]["total_supply"])
     ];
     fillMain();
 }
 
-function mFormat(num) {
+function nFormat(curr, num) {
     if(Number(num) > 999999999) {
-        return '$' + (num/1000000000).toFixed(2) + 'B';
+        return curr + (num/1000000000).toFixed(2) + 'B';
     } else if(Number(num) > 999999) {
-        return '$' + (num/1000000).toFixed(2) + 'M';
+        return curr + (num/1000000).toFixed(2) + 'M';
     } else if(Number(num) > 999) {
-        return '$' + (num/1000).toFixed(2) + 'K';
+        return curr + (num/1000).toFixed(2) + 'K';
     } else {
         return num;
     }
@@ -171,12 +215,20 @@ function fillMain() {
         $('.coin-rank').html(rank).fadeIn('fast');
         $('.coin-mcap').html(mcap).fadeIn('fast');
         $('.coin-volume').html(volume).fadeIn('fast');
-        $('.currency-small').text(currency).fadeIn('fast');  
+        $('.currency-small').text(currency).fadeIn('fast'); 
+        $('.coin-asup').html(availSup).fadeIn('fast');
+        $('.coin-tsup').html(totalSup).fadeIn('fast'); 
+        $('.symbol-small').text(' ' + symbol).fadeIn('fast');
     });
     fillPricePercent(1, '#25DAA5');
     fillPricePercent(-1, 'rgb(245, 56, 103)'); 
     fillPricePercent(0, 'rgba(255, 255, 255, 0.75)');
     console.log(perChange);
+}
+
+// toggle bewtween displaying volume/marketcap or avail/total supply on main
+function toggleSupply() {
+    $('.div-volume, .div-mcap, .div-asup, .div-tsup').toggleClass('hidden');
 }
 
 // check 1h percent change and fill info/change color
@@ -252,10 +304,24 @@ function satoshiUSD() {
 // opacity slider
 function opacity() {
     oSlider.on('input', function() {
-        $('.main-container, .a1, .a2, .a3').css("background", "rgba(67, 77, 90, " + $(this).val() + ")");
-        // $('.menu').css("box-shadow", "-1px 1px 3px rgba(43, 50, 58, " + $(this).val() + ")");
-        $('.menu').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
+        if($('body').hasClass('dark-mode')) {
+            $('.main-container').css("background", "rgba(67, 77, 90, " + $(this).val() + ")");
+            $('.menu, .a2, .a3').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
+        } else if($('body').hasClass('light-mode')) {
+            $('.main-container').css("background", "rgba(216, 225, 232, " + $(this).val() + ")");
+            $('.menu, .a2, .a3').css("background", "rgba(126, 140, 159, " + $(this).val() + ")");
+        }
     });
+}
+
+function resetOpacity(theme) {
+    if(theme === 'dark') {
+        $('.main-container').css("background", "rgba(67, 77, 90, " + $('#oSlider').val() + ")");
+        $('.menu, .a2, .a3').css("background", "rgba(38, 44, 51, " + $('#oSlider').val() + ")");
+    } else if(theme === 'light') {
+        $('.main-container').css("background", "rgba(216, 225, 232, " + $('#oSlider').val() + ")");
+        $('.menu, .a2, .a3').css("background", "rgba(126, 140, 159, " + $('#oSlider').val() + ")");
+    }   
 }
 
 // donate info
@@ -274,8 +340,6 @@ function donate() {
         }
     });
 }
-
-
 
 // clear #search-input val
 function clearSearch() {

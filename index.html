@@ -13,7 +13,7 @@
     <!-- <link rel="stylesheet" href="css/lib/rangefill.css"> -->
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
-<body>
+<body class="dark-mode">
 
     <div class="main-container">
         <!-- Menu bar -->
@@ -44,13 +44,15 @@
             <div class="col span_4_of_12 div-rank"><p>Rank</p><span class="coin-rank"></span></div>
             <div class="col span_4_of_12 div-volume"><p>Volume (24hr)</p><span class="coin-volume"></span><span class="currency-small"></span></div>
             <div class="col span_4_of_12 div-mcap"><p>Market Cap</p><span class="coin-mcap"></span><span class="currency-small"></span></div>
+            <div class="col span_4_of_12 div-asup hidden"><p>Supply (Avail)</p><span class="coin-asup"></span><span class="symbol-small"></span></div>
+            <div class="col span_4_of_12 div-tsup hidden"><p>Supply (Total)</p><span class="coin-tsup"></span><span class="symbol-small"></span></div>
         </div>
 
         <!-- Row3 -->
         <div class="section group row3">
             <div class="col span_12_of_12 search-row styled-input">
                 <input type="text" required id="search-input" maxlength="40" title=""/>
-                <label>Search...</label>
+                <label class="search-label">Search...</label>
                 <span></span>
                 <i class="far fa-times-circle search-close" aria-hidden="true"></i>
             </div>
@@ -61,19 +63,16 @@
 
         <!-- Settings overlay -->
         <aside class="a2">
-            <i class="fal fa-times outer-close toggle-overlay2" aria-hidden="true"></i>
-            <div class="section group convert-row">
+            <div class="section group">
+                <div class="col span_1_of_2 satoshi">
                 <h3>Satoshi to USD</h3>
-                <div class="col span_12_of_12 styled-input sat-inputs">
-                    <input type="text" id="convert-input">
-                    <input type="text" id="convert-display">
+                <input type="text" id="convert-input"><br>
+                <input type="text" id="convert-display">
                 </div>
-            </div>
-             
-            <div class="section group themes-row">
-                <h3 class="col span_6_of_12">Themes</h3> 
-                <div class="col span_3_of_12 theme">Dark</div>
-                <div class="col span_3_of_12 theme">Light</div>
+                <div class="col span_1_of_2 theme switch">
+                <h3>Dark mode?</h3>
+                <input type="checkbox" id="switch1" class="switch-input" checked><label for="switch1" class="switch-label"></label>
+                </div>
             </div>
 
             <div class="section group slider-row">
@@ -84,23 +83,27 @@
         
         <!-- Donation overlay -->
         <aside class="a3">
-            <i class="fal fa-times outer-close toggle-overlay3" aria-hidden="true"></i>
-            <div class="section group donate-row">
-                <div class="col span_12_of_12 donate-header"><h3>Like the app? Feel free to donate!</h3></div>
-                <div class="col span_4_of_12 about-blurb">
-                    Developed by:<br><a href="https://github.com/brandonore">Brandon Ore</a> Libraries used: 
-                    <a href="https://www.npmjs.com/package/electron">electron</a>, <a href="https://www.npmjs.com/package/request">request</a>  
+            <div class="section group">
+                <div class="col span_2_of_2 donate-header"><h3>Like the app? Feel free to donate!</h3></div>
+                <div class="section group">
+                        <div class="col span_1_of_2 about">
+                            aurora <span class="version">Version: 1.0.0</span>
+                            <p>Developed by: <a href="https://github.com/brandonore">Brandon Ore</a> Built with: 
+                            <a href="https://www.npmjs.com/package/electron">electron</a>, <a href="https://www.npmjs.com/package/request">request</a>
+                            API's: <a href="https://www.coinmarketcap.com">CoinMarketCap</a></p>
+                            <div class="select">
+                                <select name="donate" class="donate-list">
+                                        <option value="btc">Bitcoin</option>
+                                        <option value="eth">Ethereum</option>
+                                        <option value="ltc">Litecoin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col span_1_of_2 div-qr">
+                            <span><img src="src/img/btc-qr.png" alt="" class="qrcode"></span>
+                        </div>
                 </div>
-                <div class="col span_4_of_12 div-qr"><span><img src="src/img/btc-qr.png" alt="" class="qrcode"></span></div>
-                <span class="version-info">Version 1.0.0</span>
-                <div class="col span_4_of_12 select div-donate-list">
-                    <select name="donate" class="donate-list">
-                            <option value="btc">Bitcoin</option>
-                            <option value="eth">Ethereum</option>
-                            <option value="ltc">Litecoin</option>
-                    </select>
-                </div>
-                <div class="col span_12_of_12 donate-address"><span>15As8L4n1Z2oyw9UfsTpfC4KR9Q7h8eUNL</span></div>
+                <div class="col span_2_of_2 donate-address"><span>15As8L4n1Z2oyw9UfsTpfC4KR9Q7h8eUNL</span></div>
             </div>
         </aside>
     </div>
