@@ -78,13 +78,18 @@ $('.search-close').on('click', function() {
     clearSearch();  
 });
 
+// error overlay
+$('.err-btn').on('click', function() {
+    errOverlay(-401);
+});
+
 // open about links in users default browser
 $(document).on('click', 'a[href^="http"]', function(event) {
     event.preventDefault();
     shell.openExternal(this.href);
 });
 
-// make API call
+// make initial api call to fill out values
 request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response, body) => {
     if(!error && response.statusCode == 200) {
         popList = JSON.parse(body);
@@ -93,10 +98,15 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response,
         btcPrice = price;
         getListValue();
     } else {
-       // alert(error + ". Please check connection and reset the app!");
+       // show error overlay
+       $('.err-span').text(error);
+       console.log(typeof(error));
+       console.log(error);
+       errOverlay(0);
     }
 });
 
+// update values every 3min
 setInterval(() => {
     request('https://api.coinmarketcap.com/v1/ticker/' + clickedValue + '/', (error, response, body) => {
         if(!error && response.statusCode == 200) {
@@ -104,10 +114,12 @@ setInterval(() => {
             console.log(body);
             mainInfo(body);
         } else {
-            // display error
+            // show error overlay
+            $('.err-span').text(error);
+            errOverlay(0);
         }
     });
-}, 180000); // upate main every 3min
+}, 180000);
 
 // call funcs 
 showOverlays('.fa-cog', '.a2', 300);
@@ -143,6 +155,20 @@ function showOverlays(icon, overlay, speed) {
                 }
             });
             x = false;
+        }
+    });
+}
+
+// show/hide error overlay
+function errOverlay(value) {
+    $('.a1').stop().animate({
+        left: value
+    }, 300, function() {
+        $('.row1, .row2, .row3').toggleClass('hide-main');
+        $('.main-container').css('height', '200px');
+        clearSearch();
+        if(value === -401) {
+            $('.err-span').text("");
         }
     });
 }

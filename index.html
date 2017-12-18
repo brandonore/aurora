@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700,800" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700" rel="stylesheet"> 
     <link href="src/css/lib/fontawesome-all.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/1d94b74862.js"></script>
+    <!-- <script src="https://use.fontawesome.com/1d94b74862.js"></script> -->
 
     <!-- <link rel="stylesheet" href="css/lib/rangefill.css"> -->
     <link rel="stylesheet" href="src/css/styles.css">
@@ -19,9 +19,9 @@
         <!-- Menu bar -->
         <div class="section group row-menu drag">
             <div class="col span_12_of_12 menu">
-                <i class="fal fa-info-circle toggle-overlay3 info-icon" aria-hidden="true" title="About"></i>
-                <i class="fal fa-cog toggle-overlay2 cog-icon" aria-hidden="true" title="Settings"></i>
-                <i class="fal fa-refresh" aria-hidden="true" title="Reset the app if it appears frozen"></i>
+                <i class="fal fa-info-circle" aria-hidden="true" title="About"></i>
+                <i class="fal fa-cog" aria-hidden="true" title="Settings"></i>
+                <i class="fal fa-sync" aria-hidden="true" title="Reset the app if it appears frozen"></i>
                 <i class="fal fa-minus" aria-hidden="true" title="Minimize"></i>
                 <i class="fal fa-times mClose" aria-hidden="true" title="Close"></i>
             </div>
@@ -60,6 +60,18 @@
                 <table class="search-table"></table>
             </div>
         </div>
+
+        <!-- Error overlay -->
+        <aside class="a1">
+            <div class="section group">
+                <div class="col_span_2_of_2 error">
+                    <span><h3>Network error!</h3></span>
+                    <span class="err-span">alskdjflsakdjf</span>
+                    <p><span class="err-msg">Please check your internet connection and refresh/restart the app :)</span></p>
+                    <button class="err-btn">OK</button>
+                </div>
+            </div>
+        </aside>
 
         <!-- Settings overlay -->
         <aside class="a2">
