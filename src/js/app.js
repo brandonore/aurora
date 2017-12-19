@@ -149,35 +149,34 @@ function showOverlays(icon, overlay, speed) {
     let x = false;
     $(icon).on('click', function() {
         if(!x) {
+            if(overlay === '.a2') {
+                $('.fa-info-circle, .fa-sync').css('opacity', '0');
+                $('.fa-info-circle, .fa-sync').css('z-index', '-1');
+            } else if(overlay === '.a3') {
+                $('.fa-cog, .fa-sync').css('opacity', '0');
+                $('.fa-cog, .fa-sync').css('z-index', '-1');              
+            }
             $(overlay).stop().animate({
                 left: 0
             }, speed, function() {
                 $('.row1, .row2, .row3').toggleClass('hide-main');
                 $('.main-container').css('height', '200px');
-                if(overlay === '.a2') {
-                    $('.fa-info-circle, .fa-sync').css('opacity', '0');
-                    $('.fa-info-circle, .fa-sync').css('z-index', '-1');
-                } else if(overlay === '.a3') {
-                    $('.fa-cog, .fa-sync').css('opacity', '0');
-                    $('.fa-cog, .fa-sync').css('z-index', '-1');              
-                }
             });
             x = true;
         } else {
+            if(overlay === '.a2') {
+                $('.fa-info-circle, .fa-sync').css('opacity', '1');
+                $('.fa-info-circle, .fa-sync').css('z-index', '1');
+                $('#convert-input, #convert-display').val("");
+            } else if(overlay === '.a3') {
+                $('.fa-cog, .fa-sync').css('opacity', '1');
+                $('.fa-cog, .fa-sync').css('z-index', '1');
+            }
             $(overlay).stop().animate({
                 left: -401
             }, speed, function() {
                 $('.row1, .row2, .row3').toggleClass('hide-main');
                 clearSearch();
-                if(overlay === '.a2') {
-                    // $('.fa-cog').css('right', '280px');
-                    $('.fa-info-circle, .fa-sync').css('opacity', '1');
-                    $('.fa-info-circle, .fa-sync').css('z-index', '1');
-                    $('#convert-input, #convert-display').val("");
-                } else if(overlay === '.a3') {
-                    $('.fa-cog, .fa-sync').css('opacity', '1');
-                    $('.fa-cog, .fa-sync').css('z-index', '1');
-                }
             });
             x = false;
         }
