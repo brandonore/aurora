@@ -27,8 +27,10 @@ $('.mClose').on('click', function() {
     win.close();
 });
 
-$('.fa-refresh').on('click', function() {
-    win.reload();
+// open refresh overlay and disable icon
+$('.fa-sync').on('click', function() {
+    errReOverlay('.a4', 0);
+    $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
 });
 
 // toggle supply on click
@@ -78,9 +80,19 @@ $('.search-close').on('click', function() {
     clearSearch();  
 });
 
-// error overlay
-$('.err-btn').on('click', function() {
-    errOverlay(-401);
+// error/refresh overlay button action 
+$('#err-btn, #refresh-btn, #back-btn').on('click', function() {
+    if(this.id == 'err-btn') {
+        errReOverlay('.a1', -401);
+    } else if(this.id == 'refresh-btn') {
+        let clicked = this.id;
+        errReOverlay('.a4', -401, clicked);
+        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
+    } else if(this.id == 'back-btn') {
+        errReOverlay('.a4', -401);
+        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
+    }
+    
 });
 
 // open about links in users default browser
@@ -102,7 +114,7 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response,
        $('.err-span').text(error);
        console.log(typeof(error));
        console.log(error);
-       errOverlay(0);
+       errReOverlay('.a1', 0);
     }
 });
 
@@ -116,7 +128,7 @@ setInterval(() => {
         } else {
             // show error overlay
             $('.err-span').text(error);
-            errOverlay(0);
+            errReOverlay('.a1', 0);
         }
     });
 }, 180000);
@@ -142,6 +154,13 @@ function showOverlays(icon, overlay, speed) {
             }, speed, function() {
                 $('.row1, .row2, .row3').toggleClass('hide-main');
                 $('.main-container').css('height', '200px');
+                if(overlay === '.a2') {
+                    $('.fa-info-circle, .fa-sync').css('opacity', '0');
+                    $('.fa-info-circle, .fa-sync').css('z-index', '-1');
+                } else if(overlay === '.a3') {
+                    $('.fa-cog, .fa-sync').css('opacity', '0');
+                    $('.fa-cog, .fa-sync').css('z-index', '-1');              
+                }
             });
             x = true;
         } else {
@@ -151,7 +170,13 @@ function showOverlays(icon, overlay, speed) {
                 $('.row1, .row2, .row3').toggleClass('hide-main');
                 clearSearch();
                 if(overlay === '.a2') {
+                    // $('.fa-cog').css('right', '280px');
+                    $('.fa-info-circle, .fa-sync').css('opacity', '1');
+                    $('.fa-info-circle, .fa-sync').css('z-index', '1');
                     $('#convert-input, #convert-display').val("");
+                } else if(overlay === '.a3') {
+                    $('.fa-cog, .fa-sync').css('opacity', '1');
+                    $('.fa-cog, .fa-sync').css('z-index', '1');
                 }
             });
             x = false;
@@ -159,16 +184,18 @@ function showOverlays(icon, overlay, speed) {
     });
 }
 
-// show/hide error overlay
-function errOverlay(value) {
-    $('.a1').stop().animate({
+// show/hide error/refresh overlay
+function errReOverlay(overlay, value, id) {
+    $(overlay).stop().animate({
         left: value
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
         clearSearch();
-        if(value === -401) {
+        if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
+        } else if(overlay === '.a4' && value === -401 && id === 'refresh-btn') {
+            win.reload();
         }
     });
 }
