@@ -30,7 +30,7 @@ body {
 h3 {
   margin-bottom: 2px;
   margin-top: 10px;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 1.2em;
 }
 
@@ -159,13 +159,13 @@ h2 {
   font-size: 1.3em;
 }
 
-.coin-price, .percent-change {
+.coin-price, .percent-change, .coin-price-btc {
   font-weight: 500;
   font-size: 1em;
   color: var(--main-text);
 }
 
-.currency-small, .percent-time, .symbol-small {
+.currency-small, .currency-small-2, .percent-time, .symbol-small, .currency-small-btc {
   font-size: .5em;
 }
 
@@ -213,8 +213,8 @@ h2 {
   opacity: 0;
 }
 
-.hidden {
-  display: none;
+.hide {
+  display: none !important;
 }
 
 /* Menu bar and icons */
@@ -351,12 +351,13 @@ input:focus ~ span {
 }
 
 .error h3, .refresh h3 {
+  font-weight: 400;
   margin-bottom: 6px;
   margin-top: 0;
 }
 
 .error p, .refresh p {
-  font-weight: 200;
+  font-weight: 400;
   font-size: .9em;
 }
 
@@ -525,7 +526,7 @@ input[type=range]:focus {
 
 .opacity-text {
   margin-top: 0.5em;
-  font-weight: 200;
+  font-weight: 300;
   text-align: center;
 }
 

@@ -14,9 +14,10 @@ const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/
 const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
 let popList, searchContainer = [];
-let rank, id, name, symbol, price, volume, mcap, perChange, per1h, availSup, totalSup, check, selectedCoin, btcPrice, text;
+let rank, id, name, symbol, price, priceBtc, volume, mcap, perChange, per1h, availSup, totalSup, check, selectedCoin, btcPrice, text;
 let clickedValue = "bitcoin";
 let currency = ' USD';
+let currencyBtc = ' BTC';
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -33,9 +34,14 @@ $('.fa-sync').on('click', function() {
     $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
 });
 
-// toggle supply on click
+// toggle volume/supply on click
 $('.row2 p, .row2 span').on('click', function() {
     toggleSupply();
+});
+
+// toggle usd/btc on click 
+$('.coin-price, .coin-price-btc, .currency-small, .currency-small-btc, .percent-change, .percent-time').on('click', function() {
+    toggleBtcPrice();
 });
 
 // search on key up
@@ -83,6 +89,7 @@ $('.search-close').on('click', function() {
 // error/refresh overlay button action 
 $('#err-btn, #refresh-btn, #back-btn').on('click', function() {
     if(this.id == 'err-btn') {
+        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
         errReOverlay('.a1', -401);
     } else if(this.id == 'refresh-btn') {
         let clicked = this.id;
@@ -111,9 +118,8 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response,
         getListValue();
     } else {
        // show error overlay
+       $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
        $('.err-span').text(error);
-       console.log(typeof(error));
-       console.log(error);
        errReOverlay('.a1', 0);
     }
 });
@@ -127,6 +133,7 @@ setInterval(() => {
             mainInfo(body);
         } else {
             // show error overlay
+            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
             $('.err-span').text(error);
             errReOverlay('.a1', 0);
         }
@@ -231,18 +238,21 @@ function refreshMain() {
             $('.main-container').css('height', '200px');
             clearSearch();
         } else {
-            // display error
+            // show error overlay
+            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
+            $('.err-span').text(error);
+            errReOverlay('.a1', 0);
         }
     });
 }
 
 // pull info for main screen
 function mainInfo(arr) {
-    [name, id, symbol, price, rank, volume, mcap, perChange, per1h, availSup, totalSup] = [
+    [name, id, symbol, price, rank, volume, mcap, perChange, per1h, availSup, totalSup, priceBtc] = [
         arr[0]["name"], arr[0]["id"], arr[0]["symbol"], arr[0]["price_usd"],
         arr[0]["rank"], nFormat('$', arr[0]["24h_volume_usd"]), nFormat('$', arr[0]["market_cap_usd"]), 
         Math.sign(Number(arr[0]["percent_change_1h"])), arr[0]["percent_change_1h"], nFormat("", arr[0]["available_supply"]),
-        nFormat("", arr[0]["total_supply"])
+        nFormat("", arr[0]["total_supply"]), arr[0]["price_btc"]
     ];
     fillMain();
 }
@@ -261,13 +271,15 @@ function nFormat(curr, num) {
 
 // fill main screen
 function fillMain() {
-    $('.coin-picture, .coin-name, .coin-rank, .coin-volume, .coin-mcap, .currency-small').fadeOut('fast', function() {
+    $('.coin-picture, .coin-name, .coin-rank, .coin-volume, .coin-mcap, .currency-small, .currency-small-2').fadeOut('fast', function() {
         $('.coin-picture').html(imgUrlLarge + id + imgUrlEnd).fadeIn('fast');
         $('.coin-name').html(name + ' ' + '(' + symbol + ')').fadeIn('fast');
         $('.coin-rank').html(rank).fadeIn('fast');
         $('.coin-mcap').html(mcap).fadeIn('fast');
         $('.coin-volume').html(volume).fadeIn('fast');
-        $('.currency-small').text(currency).fadeIn('fast'); 
+        $('.currency-small').text(currency).fadeIn('fast');
+        $('.currency-small-2').text(currency).fadeIn('fast');
+        $('.currency-small-btc').text(currencyBtc).fadeIn('fast'); 
         $('.coin-asup').html(availSup).fadeIn('fast');
         $('.coin-tsup').html(totalSup).fadeIn('fast'); 
         $('.symbol-small').text(' ' + symbol).fadeIn('fast');
@@ -280,17 +292,23 @@ function fillMain() {
 
 // toggle bewtween displaying volume/marketcap or avail/total supply on main
 function toggleSupply() {
-    $('.div-volume, .div-mcap, .div-asup, .div-tsup').toggleClass('hidden');
+    $('.div-volume, .div-mcap, .div-asup, .div-tsup').toggleClass('hide');
+}
+
+// toggle between usd/btc price
+function toggleBtcPrice() {
+    $('.coin-price, .currency-small, .coin-price-btc, .currency-small-btc').toggleClass('hide');
 }
 
 // check 1h percent change and fill info/change color
 function fillPricePercent(change, color) {
     if(perChange === change) {
-        $('.coin-price, .percent-change, .percent-time').fadeOut('fast', function() {
+        $('.coin-price, .coin-price-btc, .percent-change, .percent-time').fadeOut('fast', function() {
             $('.coin-price').text('$' + price).fadeIn('fast');
+            $('.coin-price-btc').text(priceBtc).fadeIn('fast');
             $('.percent-change').text('(' + per1h + '%)').fadeIn('fast');
             $('.percent-time').text('1hr').fadeIn('fast');
-            $('.coin-price, .percent-change').css('color', color);
+            $('.coin-price, .coin-price-btc, .percent-change').css('color', color);
         });     
     }   
 }
