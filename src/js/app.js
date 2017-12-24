@@ -19,6 +19,9 @@ let clickedValue = "bitcoin";
 let currency = ' USD';
 let currencyBtc = ' BTC';
 
+// force resziable option off
+win.setResizable(false);
+
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
     win.minimize();
@@ -53,8 +56,7 @@ $('#search-input').keyup(function() {
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    $('#compact-btn').hide();
-
+    win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -159,6 +161,7 @@ function showOverlays(icon, overlay, speed) {
             if(overlay === '.a2') {
                 $('.fa-info-circle, .fa-sync').css('opacity', '0');
                 $('.fa-info-circle, .fa-sync').css('z-index', '-1');
+                $('#convert-input').focus();
             } else if(overlay === '.a3') {
                 $('.fa-cog, .fa-sync').css('opacity', '0');
                 $('.fa-cog, .fa-sync').css('z-index', '-1');              
@@ -168,6 +171,7 @@ function showOverlays(icon, overlay, speed) {
             }, speed, function() {
                 $('.row1, .row2, .row3').toggleClass('hide-main');
                 $('.main-container').css('height', '200px');
+                win.setSize(400, 200);
             });
             x = true;
         } else {
@@ -197,6 +201,7 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
+        win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -420,4 +425,5 @@ function clearSearch() {
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
+    win.setSize(400, 200);
 }

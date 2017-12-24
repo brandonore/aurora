@@ -1,9 +1,9 @@
 /* theme styles */
 .dark-mode {
-  --menu-bar: rgba(38, 44, 51, 1);
+  --menu-bar: rgb(38, 44, 51);
   --main-background: #434D5A;
   --main-text: rgba(255, 255, 255, 0.75);
-  --colored-elements: #25DAA5;
+  --colored-elements: #03FABD;
 }
 
 .light-mode {
@@ -608,9 +608,14 @@ input[type=range]:focus {
 }
 
 /* Donate overlay ====================================================================== */
+.donate-header {
+  margin: 0 auto;
+}
+
 .donate-header h3 {
   margin: 0 auto;
   text-align: center;
+  padding-bottom: 4px;
 }
 
 .div-qr {
@@ -625,6 +630,7 @@ input[type=range]:focus {
 .about {
   text-align: right;
   font-size: .8em;
+  padding-top: 4px;
 }
 
 .about p, .version {
@@ -657,9 +663,8 @@ select {
 /* Custom Select */
 .select {
   position: relative;
-  margin: 0 0 0 116px;
+  margin: 0 0 0 112px;
   top: 7px;
-  width: 6.2em;
   height: 1.5em;
   background: var(--main-background);
   overflow: hidden;
@@ -683,7 +688,7 @@ select::-ms-expand {
   content: '\25BC';
   position: absolute;
   top: 0;
-  left: 59px;
+  left: 65px;
   bottom: 0;
   padding: .1em .3em;
   background: var(--main-background);
