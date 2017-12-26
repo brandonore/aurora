@@ -20,7 +20,7 @@ let currency = ' USD';
 let currencyBtc = ' BTC';
 
 // force resziable option off
-win.setResizable(false);
+// win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -56,7 +56,7 @@ $('#search-input').keyup(function() {
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    win.setSize(400, 626);
+    // win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -158,6 +158,7 @@ function showOverlays(icon, overlay, speed) {
     let x = false;
     $(icon).on('click', function() {
         if(!x) {
+            $('.row1, .row2, .row3').toggleClass('hide-main');
             if(overlay === '.a2') {
                 $('.fa-info-circle, .fa-sync').css('opacity', '0');
                 $('.fa-info-circle, .fa-sync').css('z-index', '-1');
@@ -169,12 +170,12 @@ function showOverlays(icon, overlay, speed) {
             $(overlay).stop().animate({
                 left: 0
             }, speed, function() {
-                $('.row1, .row2, .row3').toggleClass('hide-main');
                 $('.main-container').css('height', '200px');
                 win.setSize(400, 200);
             });
             x = true;
         } else {
+            $('.row1, .row2, .row3').toggleClass('hide-main');
             if(overlay === '.a2') {
                 $('.fa-info-circle, .fa-sync').css('opacity', '1');
                 $('.fa-info-circle, .fa-sync').css('z-index', '1');
@@ -186,7 +187,6 @@ function showOverlays(icon, overlay, speed) {
             $(overlay).stop().animate({
                 left: -401
             }, speed, function() {
-                $('.row1, .row2, .row3').toggleClass('hide-main');
                 clearSearch();
             });
             x = false;

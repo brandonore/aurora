@@ -66,14 +66,6 @@ a:hover, a:active {
   font-weight: bold;
 }
 
-/* Saved Colors */
-.colors {
-  color: #25DAA5; /* Elements */
-  color: #F27793;
-  color: #BD77F2;
-  color: #434D5A; /* Background */
-  color: #7E8C9F; /* Titles, font */
-}
 
 /*  Sections/Grid ======================================================================*/
 .drag {
@@ -415,13 +407,14 @@ input:focus ~ span {
 /* Settings overlay ====================================================================== */
 .satoshi, .theme {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  margin-top: -4px;
 }
 
 #convert-input, #convert-display {
   border-bottom: solid 1px var(--main-text);
   font-weight: 600;
-  width: 75%;
+  width: 70%;
   height: 14px;
   margin: 4px auto;
   transition: all .1s ease-in-out;
@@ -630,7 +623,10 @@ input[type=range]:focus {
 .about {
   text-align: right;
   font-size: .8em;
-  padding-top: 4px;
+}
+
+.social-icons {
+  text-align: center;
 }
 
 .about p, .version {
