@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo" width="400">
+  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo">
   <br>
   aurora
   <br>
@@ -22,9 +22,9 @@
 ## Features
 
 * Auto-syncs every 3 minutes
-* Pulls data from <a href="https://coinmarketcap.com">CoinMarketCap</a>
+* Pulls data from the <a href="https://coinmarketcap.com">CoinMarketCap</a> API
   - Select any of the 1300+ coins they support from an interactive drop-down list
-* Filter/search to help find your favorite coins  
+* Filter/search to help you find your favorite coins  
 * Main screen displays coin logo, rank, price (USD), percent change (1h), volume (24h), market cap
   - Click coin price to toggle price between USD and BTC
   - Click volume/market cap to toggle bewtween available and total supply
@@ -34,12 +34,18 @@
 * Refresh button (please avoid spamming this, only use if the app appears frozen)
 * Cross platform
   - Windows and macOS. Linux coming soon!
+
+## To-do List/Feature Request
+
+* Auto-updates (In-progress)
+* Highlight/scroll through coin list with arrow keys, 'enter' to select highlighted option
+* Compact mode
   
 ## Download
 
 You can [download](https://github.com/brandonore/aurora/releases/tag/v1.0.0) the latest compiled version of aurora for Windows and macOS
 
-## How to contribute
+## How to Contribute
 
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
