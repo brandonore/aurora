@@ -30,7 +30,7 @@ $('.update-btn').on('click', function() {
 });
 
 // force resziable option off
-// win.setResizable(false);
+win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -66,7 +66,7 @@ $('#search-input').keyup(function() {
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    // win.setSize(400, 626);
+    win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -181,7 +181,7 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                // win.setSize(400, 200);
+                win.setSize(400, 200);
             });
             x = true;
         } else {
@@ -211,7 +211,7 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        // win.setSize(400, 200);
+        win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -435,5 +435,5 @@ function clearSearch() {
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
-    // win.setSize(400, 200);
+    win.setSize(400, 200);
 }

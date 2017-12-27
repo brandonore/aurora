@@ -1,0 +1,9 @@
+version: 1.0.0
+files:
+  - url: aurora-setup-1.0.0.exe
+    sha512: g3w1yCJIM1WG67S49mXZmcbMJ0y9zGUm3NhVUkP9AEv2bm6bWDoE6cpXXbRUqIHdP6ATkEfmEiNyI2hXBlQb9A==
+    size: 38404019
+path: aurora-setup-1.0.0.exe
+sha512: g3w1yCJIM1WG67S49mXZmcbMJ0y9zGUm3NhVUkP9AEv2bm6bWDoE6cpXXbRUqIHdP6ATkEfmEiNyI2hXBlQb9A==
+sha2: e7de84b9d935d4e00c473d25e59a8b3536c87b7b7def876fd39b2ea2d9f3177a
+releaseDate: '2017-12-27T01:30:50.489Z'
