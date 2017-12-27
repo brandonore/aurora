@@ -1,5 +1,6 @@
 const electron = require('electron')
 const {app, BrowserWindow, ipcMain} = electron
+const{autoUpdater} = require("electron-updater");
 const path = require('path')
 const url = require('url')
 
@@ -34,7 +35,11 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+// Check for updates as well
+app.on('ready', () => {
+  createWindow();
+  autoUpdater.checkForUpdates();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -51,4 +56,14 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
+})
+
+// when the update has been downloaded and is ready to be installed, notify the BrowserWindow
+autoUpdater.on('update-downloaded', (info) => {
+  win.webContents.send('updateReady')
+});
+
+// when receiving a quitAndInstall signal, quit and install the new version ;)
+ipcMain.on("quitAndInstall", (event, arg) => {
+  autoUpdater.quitAndInstall();
 })

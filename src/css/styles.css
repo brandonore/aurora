@@ -218,7 +218,7 @@ h2 {
   border-radius: 6px 6px 0 0;
 }
 
-.fa-minus, .mClose {
+.fa-minus, .mClose, .fa-arrow-to-bottom {
   position: relative;
   font-size: 18px;
   cursor: pointer;
@@ -226,7 +226,7 @@ h2 {
 }
 
 .fa-cog, .fa-info-circle, .fa-sync {
-  right: 280px;
+  right: 258px;
   position: relative;
   font-size: 15px;
   cursor: pointer;
@@ -251,6 +251,12 @@ h2 {
   margin-right: 8px;
   margin-left: 6px;
   transition: all .15s ease-in-out;
+}
+
+.fa-arrow-to-bottom {
+  margin-right: 6px;
+  color: #03FABD;
+  visibility: hidden;
 }
 
 /* Search main */

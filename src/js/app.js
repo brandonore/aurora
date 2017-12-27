@@ -6,7 +6,7 @@ const request = require('request');
 const electron = require('electron');
 const shell = electron.shell;
 const {ipcRenderer} = electron;
-const { remote } = require('electron');
+const {remote} = require('electron');
 let win = remote.getCurrentWindow();
 
 const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins/16x16/';
@@ -18,6 +18,16 @@ let rank, id, name, symbol, price, priceBtc, volume, mcap, perChange, per1h, ava
 let clickedValue = "bitcoin";
 let currency = ' USD';
 let currencyBtc = ' BTC';
+
+// wait for an updateReady message
+ipcRenderer.on('updateReady', function(event, text) {
+    $('.update-btn').css('visibility', 'visible');
+});
+
+// when update ready and btn clicked, send a quitAndInstall message to main process
+$('.update-btn').on('click', function() {
+    ipcRenderer.send('quitAndInstall');
+});
 
 // force resziable option off
 // win.setResizable(false);
@@ -171,7 +181,7 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                win.setSize(400, 200);
+                // win.setSize(400, 200);
             });
             x = true;
         } else {
@@ -201,7 +211,7 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        win.setSize(400, 200);
+        // win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -425,5 +435,5 @@ function clearSearch() {
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
-    win.setSize(400, 200);
+    // win.setSize(400, 200);
 }
