@@ -256,7 +256,7 @@ h2 {
 .fa-arrow-to-bottom {
   margin-right: 6px;
   color: #03FABD;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 /* Search main */
