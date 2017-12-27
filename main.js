@@ -38,7 +38,7 @@ function createWindow () {
 // Check for updates as well
 app.on('ready', () => {
   createWindow();
-  autoUpdater.checkForUpdates();
+  // autoUpdater.checkForUpdates();
 })
 
 // Quit when all windows are closed.
@@ -58,12 +58,12 @@ app.on('activate', () => {
   }
 })
 
-// when the update has been downloaded and is ready to be installed, notify the BrowserWindow
-autoUpdater.on('update-downloaded', (info) => {
-  win.webContents.send('updateReady')
-});
+// // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
+// autoUpdater.on('update-downloaded', (info) => {
+//   win.webContents.send('updateReady')
+// });
 
-// when receiving a quitAndInstall signal, quit and install the new version ;)
-ipcMain.on("quitAndInstall", (event, arg) => {
-  autoUpdater.quitAndInstall();
-})
+// // when receiving a quitAndInstall signal, quit and install the new version ;)
+// ipcMain.on("quitAndInstall", (event, arg) => {
+//   autoUpdater.quitAndInstall();
+// })

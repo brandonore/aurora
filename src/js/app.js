@@ -19,15 +19,15 @@ let clickedValue = "bitcoin";
 let currency = ' USD';
 let currencyBtc = ' BTC';
 
-// wait for an updateReady message
-ipcRenderer.on('updateReady', function(event, text) {
-    $('.update-btn').css('visibility', 'visible');
-});
+// // wait for an updateReady message
+// ipcRenderer.on('updateReady', function(event, text) {
+//     $('.update-btn').css('visibility', 'visible');
+// });
 
-// when update ready and btn clicked, send a quitAndInstall message to main process
-$('.update-btn').on('click', function() {
-    ipcRenderer.send('quitAndInstall');
-});
+// // when update ready and btn clicked, send a quitAndInstall message to main process
+// $('.update-btn').on('click', function() {
+//     ipcRenderer.send('quitAndInstall');
+// });
 
 // force resziable option off
 win.setResizable(false);
