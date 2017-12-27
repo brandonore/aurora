@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/img/logo.png" alt="auroralogo" width="400">
+  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo" width="400">
   <br>
   aurora
   <br>
@@ -17,7 +17,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/brandonore/aurora/master/img/aurora.gif)
+![screenshot](https://raw.githubusercontent.com/brandonore/aurora/master/assets/aurora.gif)
 
 ## Features
 
