@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "description": "Real time updates on your favorite cryptocurrencies!",
   "main": "main.js",
+  "author": "Brandon Ore",
+  "license": "MIT",
   "repository": "https://github.com/brandonore/aurora",
   "scripts": {
     "start": "electron .",
     "build": "build --win",
     "ship": "build --win -p always"
   },
-  "author": "Brandon Ore",
-  "license": "MIT",
+  "directories": {
+    "buildResources": "assets"
+  },
   "dependencies": {
     "electron-updater": "^2.17.6",
     "open": "0.0.5",
