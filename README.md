@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo">
+  <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo" width="800">
   <br>
   aurora
   <br>
@@ -71,6 +71,7 @@ This software was built with the following open source packages:
 - [Node.js](https://nodejs.org/)
 - [Request](https://www.npmjs.com/package/request)
 
+All coin information pulled from the <a href="https://coinmarketcap.com">CoinMarketCap</a> API
 
 ## License
 
