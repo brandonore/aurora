@@ -22,7 +22,7 @@
 ## Features
 
 * Auto-syncs every 3 minutes
-* Pulls data from the <a href="https://coinmarketcap.com">CoinMarketCap</a> API
+* Pulls data from <a href="https://coinmarketcap.com">CoinMarketCap</a>
   - Select any of the 1300+ coins they support from an interactive drop-down list
 * Filter/search to help you find your favorite coins  
 * Main screen displays coin logo, rank, price (USD), percent change (1h), volume (24h), market cap
@@ -71,7 +71,7 @@ This software was built with the following open source packages:
 - [Node.js](https://nodejs.org/)
 - [Request](https://www.npmjs.com/package/request)
 
-All coin information pulled from the <a href="https://coinmarketcap.com">CoinMarketCap</a> API
+All coin information pulled from the <a href="https://coinmarketcap.com/api/">CoinMarketCap</a> API
 
 ## License
 
