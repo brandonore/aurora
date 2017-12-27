@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="#to-do">To-do List</a> •
+  <a href="#to-do-list/feature-request">To-do List</a> •
   <a href="#download">Download</a> •
   <a href="#how-to-contribute">How to Contribute</a> •
   <a href="#credits">Credits</a> •
