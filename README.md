@@ -1,4 +1,3 @@
-
 <h1 align="center">
   <br>
   <img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/logo.png" alt="auroralogo" width="800">
@@ -18,7 +17,9 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/brandonore/aurora/master/assets/aurora.gif)
+<p align="center">
+<img src="https://raw.githubusercontent.com/brandonore/aurora/master/assets/aurora.gif">
+</p>
 
 ## Features
 
@@ -54,7 +55,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 # Clone this repository
 $ git clone https://github.com/brandonore/aurora
 
-# Go into the repository
+# Change directory into repository
 $ cd aurora
 
 # Install dependencies
