@@ -51,7 +51,9 @@
         <!-- Row3 -->
         <div class="section group row3">
             <div class="col span_12_of_12 search-row styled-input">
-                <input type="text" required id="search-input" maxlength="40" title=""/>
+                <!-- <form class="col span_12_of_12 search-row styled-input" novalidate> -->
+                    <input type="text" required id="search-input" maxlength="40" formnovalidate placeholder="Search...">
+                <!-- </form> -->
                 <label class="search-label">Search...</label>
                 <span></span>
                 <i class="far fa-times-circle search-close" aria-hidden="true" title="Close search"></i>
@@ -65,9 +67,9 @@
         <aside class="a1">
             <div class="section group">
                 <div class="col_span_2_of_2 error">
-                    <span><h3>Network error!</h3></span>
-                    <span class="err-span">alskdjflsakdjf</span>
-                    <p><span class="err-msg">Please check your internet connection and refresh/restart the app :)</span></p>
+                    <span><h3>Network error! <i class="far fa-exclamation-circle"></i></h3></span>
+                    <span class="err-span"></span>
+                    <p><span class="err-msg">Please check your internet connection and refresh/restart the app.</span></p>
                     <button id="err-btn">OK</button>
                 </div>
             </div>
@@ -111,14 +113,15 @@
             <div class="section group">
                 <div class="col span_2_of_2 donate-header"><h3>Like the app? Feel free to donate!</h3></div>
                 <div class="section group">
-                        <div class="col span_1_of_2 about">
+                        <div class="col span_1_of_3 about">
                             aurora <span class="version">v1.0.0</span>
-                            <p>Built by: Brandon Ore
+                            <p>
                             <a href="https://twitter.com/brandon_ore"><i class="fab fa-twitter"></i></a>
                             <a href="https://github.com/brandonore"><i class="fab fa-github"></i></a>
-                            Built with: 
+                            <!-- Built with: 
                             <a href="https://electronjs.org/">electron</a>, <a href="https://www.npmjs.com/package/request">request</a>
-                            API's: <a href="https://www.coinmarketcap.com">CoinMarketCap</a></p>
+                            API's: <a href="https://www.coinmarketcap.com">CoinMarketCap</a> -->
+                            </p>
                             <div class="select">
                                 <select name="donate" class="donate-list">
                                         <option value="btc">Bitcoin</option>
@@ -127,8 +130,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col span_1_of_2 div-qr">
-                            <span><img src="src/img/btc-qr.png" alt="" class="qrcode"></span>
+                        <div class="col span_1_of_3 div-logo">
+                            <span><a href="https://github.com/brandonore/aurora"><img src="assets/icon.png" alt="logo" class="logo-main"></a></span>
+                        </div>
+                        <div class="col span_1_of_3 div-qr">
+                            <span><img src="src/img/btc-qr.png" alt="donate" class="qrcode"></span>
                         </div>
                 </div>
                 <div class="col span_2_of_2 donate-address"><span>15As8L4n1Z2oyw9UfsTpfC4KR9Q7h8eUNL</span></div>

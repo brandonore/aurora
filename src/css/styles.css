@@ -59,12 +59,13 @@ a {
 
 a:link, a:visited {
   color: var(--main-text);
+  font-weight: 200;
 }
 
-a:hover, a:active {
+/* a:hover {
   color: var(--main-text);
-  font-weight: bold;
-}
+  font-weight: 600;
+} */
 
 
 /*  Sections/Grid ======================================================================*/
@@ -354,6 +355,10 @@ input:focus ~ span {
   margin-top: 0;
 }
 
+.err-span {
+  font-size: .8em;
+}
+
 .error p, .refresh p {
   font-weight: 400;
   font-size: .9em;
@@ -548,6 +553,10 @@ input[type=range]:focus {
   height: 20px;
 }
 
+#search-input::-webkit-input-placeholder {
+  font-size: 0.82em;
+}
+
 .list-image {
   padding-right: 16px;
 }
@@ -618,7 +627,16 @@ input[type=range]:focus {
 }
 
 .div-qr {
+  text-align: left;
+}
+
+.div-logo {
   text-align: center;
+}
+
+.logo-main {
+  width: 90px;
+  height: 90px;
 }
 
 .qrcode {
@@ -628,7 +646,12 @@ input[type=range]:focus {
 
 .about {
   text-align: right;
-  font-size: .8em;
+  font-size: .9em;
+  margin-top: 10px;
+}
+
+.fa-twitter, .fa-github {
+  font-size: 1.2em;
 }
 
 .social-icons {
@@ -665,13 +688,14 @@ select {
 /* Custom Select */
 .select {
   position: relative;
-  margin: 0 0 0 112px;
+  margin: 0 0 0 44px;
   top: 7px;
   height: 1.5em;
   background: var(--main-background);
   overflow: hidden;
   border-radius: 3px;
 }
+
 select {
   outline: 0;
   width: 100%;
@@ -682,9 +706,11 @@ select {
   cursor: pointer;
   border: none;
 }
+
 select::-ms-expand {
   display: none;
 }
+
 /* Arrow */
 .select::after {
   content: '\25BC';
@@ -696,10 +722,12 @@ select::-ms-expand {
   background: var(--main-background);
   pointer-events: none;
 }
+
 /* Transition */
 .select:hover::after {
   color: var(--colored-elements);
 }
+
 .select::after {
   -webkit-transition: .25s all ease;
   transition: .25s all ease;

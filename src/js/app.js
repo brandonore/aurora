@@ -19,6 +19,9 @@ let clickedValue = "bitcoin";
 let currency = ' USD';
 let currencyBtc = ' BTC';
 
+/*---------------------------------------
+* Start initial code/call funcs and reqs
+* ---------------------------------------*/
 // // wait for an updateReady message
 // ipcRenderer.on('updateReady', function(event, text) {
 //     $('.update-btn').css('visibility', 'visible');
@@ -30,7 +33,7 @@ let currencyBtc = ' BTC';
 // });
 
 // force resziable option off
-win.setResizable(false);
+// win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -62,11 +65,14 @@ $('#search-input').keyup(function() {
     searchList();
 });
 
+// remove input validation popup
+$('#search-input').removeAttr('required');
+
 // show/hide .search list
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    win.setSize(400, 626);
+    // win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -158,6 +164,8 @@ showOverlays('.fa-info-circle', '.a3', 300);
 donate();
 satoshiUSD();
 opacity();
+searchPlaceholder();
+dynamicHover();
 
 /*---------------------------------------
 * Functions
@@ -181,7 +189,7 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                win.setSize(400, 200);
+                // win.setSize(400, 200);
             });
             x = true;
         } else {
@@ -211,10 +219,11 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        win.setSize(400, 200);
+        // win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
+            win.reload();
         } else if(overlay === '.a4' && value === -401 && id === 'refresh-btn') {
             win.reload();
         }
@@ -435,5 +444,26 @@ function clearSearch() {
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
-    win.setSize(400, 200);
+    // win.setSize(400, 200);
 }
+
+// show/hide placeholder text for search
+function searchPlaceholder() {
+    $('#search-input').data('holder', $('#search-input').attr('placeholder'));
+        $('#search-input').focusin(function () {
+            $(this).attr('placeholder', '');
+        });
+        $('#search-input').focusout(function () {
+            $(this).attr('placeholder', $(this).data('holder'));
+    });
+}
+
+function dynamicHover() {
+    $(document).on('mouseenter', 'a', function() {
+        $(this).css('font-weight', '600');
+    });
+    $(document).on('mouseleave', 'a', function() {
+        $(this).css('font-weight', '200');
+    });
+}
+
