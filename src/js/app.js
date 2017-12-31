@@ -15,9 +15,10 @@ const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
 let popList, searchContainer = [];
 let rank, id, name, symbol, price, priceBtc, volume, mcap, perChange, per1h, availSup, totalSup, check, selectedCoin, btcPrice, text;
-let clickedValue = "bitcoin";
+let clickedValue = 'bitcoin';
 let currency = ' USD';
 let currencyBtc = ' BTC';
+let coinNum, oldCoinNum = 100;
 
 /*---------------------------------------
 * Start initial code/call funcs and reqs
@@ -104,65 +105,21 @@ $('.search-close').on('click', function() {
     clearSearch();  
 });
 
-// error/refresh overlay button action 
-$('#err-btn, #refresh-btn, #back-btn').on('click', function() {
-    if(this.id == 'err-btn') {
-        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
-        errReOverlay('.a1', -401);
-    } else if(this.id == 'refresh-btn') {
-        let clicked = this.id;
-        errReOverlay('.a4', -401, clicked);
-        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
-    } else if(this.id == 'back-btn') {
-        errReOverlay('.a4', -401);
-        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
-    }
-    
-});
-
 // open about links in users default browser
 $(document).on('click', 'a[href^="http"]', function(event) {
     event.preventDefault();
     shell.openExternal(this.href);
 });
 
-// make initial api call to fill out values
-request('https://api.coinmarketcap.com/v1/ticker/?limit=1500', (error, response, body) => {
-    if(!error && response.statusCode == 200) {
-        popList = JSON.parse(body);
-        populateData();
-        mainInfo(popList);
-        btcPrice = price;
-        getListValue();
-    } else {
-       // show error overlay
-       $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
-       $('.err-span').text(error);
-       errReOverlay('.a1', 0);
-    }
-});
-
-// update values every 3min
-setInterval(() => {
-    request('https://api.coinmarketcap.com/v1/ticker/' + clickedValue + '/', (error, response, body) => {
-        if(!error && response.statusCode == 200) {
-            body = JSON.parse(body);
-            console.log(body);
-            mainInfo(body);
-        } else {
-            // show error overlay
-            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
-            $('.err-span').text(error);
-            errReOverlay('.a1', 0);
-        }
-    });
-}, 180000);
-
-// call funcs 
+// call funcs
+firstCall(); 
+secondCall();
+errReBtns();
 showOverlays('.fa-cog', '.a2', 300);
 showOverlays('.fa-info-circle', '.a3', 300);
 donate();
 satoshiUSD();
+setSearchCount();
 opacity();
 searchPlaceholder();
 dynamicHover();
@@ -170,6 +127,42 @@ dynamicHover();
 /*---------------------------------------
 * Functions
 * ---------------------------------------*/
+
+// make initial api call to fill out values
+function firstCall() {
+    request('https://api.coinmarketcap.com/v1/ticker/?limit=' + coinNum, (error, response, body) => {
+        if(!error && response.statusCode == 200) {
+            popList = JSON.parse(body);
+            populateData();
+            mainInfo(popList);
+            btcPrice = price;
+            getListValue();
+        } else {
+        // show error overlay
+        $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
+        $('.err-span').text(error);
+        errReOverlay('.a1', 0);
+        }
+    });
+}
+
+// start updating values every 3min
+function secondCall() {
+    setInterval(() => {
+        request('https://api.coinmarketcap.com/v1/ticker/' + clickedValue + '/', (error, response, body) => {
+            if(!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                console.log(body);
+                mainInfo(body);
+            } else {
+                // show error overlay
+                $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
+                $('.err-span').text(error);
+                errReOverlay('.a1', 0);
+            }
+        });
+    }, 180000);
+}
 
 // handle overlays for settings/about
 function showOverlays(icon, overlay, speed) {
@@ -198,6 +191,11 @@ function showOverlays(icon, overlay, speed) {
                 $('.fa-info-circle, .fa-sync').css('opacity', '1');
                 $('.fa-info-circle, .fa-sync').css('z-index', '1');
                 $('#convert-input, #convert-display').val("");
+                if(coinNum !== oldCoinNum) {
+                    firstCall();
+                    oldCoinNum = coinNum;
+                    clickedValue = 'bitcoin';
+                }
             } else if(overlay === '.a3') {
                 $('.fa-cog, .fa-sync').css('opacity', '1');
                 $('.fa-cog, .fa-sync').css('z-index', '1');
@@ -227,6 +225,24 @@ function errReOverlay(overlay, value, id) {
         } else if(overlay === '.a4' && value === -401 && id === 'refresh-btn') {
             win.reload();
         }
+    });
+}
+
+// error/refresh overlay button action 
+function errReBtns() {
+    $('#err-btn, #refresh-btn, #back-btn').on('click', function() {
+        if(this.id == 'err-btn') {
+            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
+            errReOverlay('.a1', -401);
+        } else if(this.id == 'refresh-btn') {
+            let clicked = this.id;
+            errReOverlay('.a4', -401, clicked);
+            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
+        } else if(this.id == 'back-btn') {
+            errReOverlay('.a4', -401);
+            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'inline-block');
+        }
+        
     });
 }
 
@@ -339,6 +355,7 @@ function fillPricePercent(change, color) {
 
 // populate search list
 function populateData() {
+    $('.search-table').empty();
     for(var i = 0; i < popList.length; i++) {
         rank = popList[i]["rank"];
         id = popList[i]["id"];
@@ -350,8 +367,23 @@ function populateData() {
 
 // generate div for search list
 function generateDiv() {
-    $('.search-table').append('<tr id="row"><td class="list-rank">' + rank + '</td><td class="list-image">' + imgUrlSmall + id + imgUrlEnd + '</td><td class="listDiv"><a href="#">' + 
+    $('.search-table').append('<tr class="row"><td class="list-rank">' + rank + '</td><td class="list-image">' + imgUrlSmall + id + imgUrlEnd + '</td><td class="listDiv"><a href="#">' + 
     name + '</a> (' + symbol + ')</td></tr>');
+}
+
+// check input value and update coinNum value
+function setSearchCount() {
+    $('#coin-count').bind('input', function() {
+        x = parseInt($('#coin-count').val().replace(/\,/g,''));
+        if(isNaN(x * 2) || x <= 0) {
+            console.log('nan error');
+            coinNum = 100;
+        } else if(x >= 1) {
+            coinNum = x;
+            console.log(coinNum);
+            console.log(typeof(coinNum));
+        }
+    });
 }
 
 // filter search 
@@ -458,6 +490,7 @@ function searchPlaceholder() {
     });
 }
 
+// prevent hover getting stuck on search list
 function dynamicHover() {
     $(document).on('mouseenter', 'a', function() {
         $(this).css('font-weight', '600');

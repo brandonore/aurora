@@ -4,12 +4,28 @@
   "description": "Real time updates on your favorite cryptocurrencies!",
   "main": "main.js",
   "author": "Brandon Ore",
+  "homepage": "http://github.com/brandonore/aurora",
   "license": "MIT",
   "repository": "https://github.com/brandonore/aurora",
+  "build": {
+    "appId": "com.electron.aurora",
+    "productName": "aurora",
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "license": "LICENSE",
+      "runAfterFinish": true
+    }
+  },
   "scripts": {
-    "start": "electron .",
-    "build": "build --win",
-    "ship": "build --win -p always"
+    "pack": "build --dir",
+    "dist": "build",
+    "postinstall": "install-app-deps",
+    "start": "electron ."
   },
   "dependencies": {
     "electron-updater": "^2.17.6",

@@ -257,7 +257,7 @@ h2 {
 .fa-arrow-to-bottom {
   margin-right: 6px;
   color: #03FABD;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 /* Search main */
@@ -424,10 +424,31 @@ input:focus ~ span {
 
 #convert-input, #convert-display {
   border-bottom: solid 1px var(--main-text);
-  font-weight: 600;
   width: 70%;
-  height: 14px;
   margin: 4px auto;
+}
+
+#coin-count {
+  border: solid 1px var(--main-text);
+  width: 50%;
+  margin-right: 20px;
+}
+
+#coin-count::-webkit-input-placeholder {
+  font-size: .8em;
+  font-weight: 200;
+  color: var(--main-text);
+  opacity: 1;
+}
+
+.fa-sort-numeric-down {
+  padding-right: 5px;
+  font-size: 1.2em;
+}
+
+#convert-input, #convert-display, #coin-count {
+  font-weight: 600;
+  height: 14px; 
   transition: all .1s ease-in-out;
 }
 
@@ -458,6 +479,7 @@ input:focus ~ span {
   clip: rect(0 0 0 0);
   color: transparent;
   user-select: none;
+  margin-bottom: 18px;
 }
 
 .switch-label:before, .switch-label:after {
@@ -468,18 +490,18 @@ input:focus ~ span {
 }
 
 .switch-label:before {
-  margin-top: 9px;
+  margin-top: 4px;
   width: 27%;
-  height: 36%;
-  left: 70px;
+  height: 21%;
+  left: 76px;
   background-color: var(--main-background);
   border-radius: 9999em;
   transition: background-color 0.25s ease; 
 }
 
 .switch-label:after {
-  top: 47px;
-  left: 72px;
+  top: 42px;
+  left: 78px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -493,7 +515,11 @@ input:focus ~ span {
 }
 
 .switch-input:checked + .switch-label:after {
-  left: 103px;
+  left: 108px;
+}
+
+.coin-count-text {
+  margin-top: 15px;
 }
 
 /* opacity slider */
