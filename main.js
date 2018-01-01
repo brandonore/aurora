@@ -1,13 +1,16 @@
-const electron = require('electron')
+const electron = require('electron');
 const {app, BrowserWindow, ipcMain} = electron
 const{autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const path = require('path')
-const url = require('url')
+const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+
+/*---------------------------------------
+* Auto-updater
+* ---------------------------------------*/
 
 // setup logger
 autoUpdater.logger = require('electron-log');
@@ -41,30 +44,26 @@ autoUpdater.on('update-downloaded', (info) => {
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
   autoUpdater.quitAndInstall();
-})
+});
 
-// autoUpdater.on('update-downloaded', (info) => {
-//   console.log('Update downloaded');
-//   autoUpdater.quitAndInstall();
-// });
-
+// log updater errors
 autoUpdater.on('error', (error) => {
   console.error(error);
 });
+
+/*---------------------------------------
+* App start
+* ---------------------------------------*/
 
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({width: 400, height: 200, frame: false, transparent: true})
 
-  // and load the index.html of the app.
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  // load index.html for the app
+  win.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {

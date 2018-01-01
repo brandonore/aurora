@@ -62,12 +62,6 @@ a:link, a:visited {
   font-weight: 200;
 }
 
-/* a:hover {
-  color: var(--main-text);
-  font-weight: 600;
-} */
-
-
 /*  Sections/Grid ======================================================================*/
 .drag {
   -webkit-app-region: drag;
@@ -582,6 +576,7 @@ input[type=range]:focus {
 
 #search-input::-webkit-input-placeholder {
   font-size: 0.82em;
+  color: var(--main-text);
 }
 
 .list-image {

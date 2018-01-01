@@ -58,3 +58,5 @@ typings/
 .env
 
 electron-builder.yml
+
+dist/

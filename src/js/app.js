@@ -189,14 +189,14 @@ function showOverlays(icon, overlay, speed) {
         } else {
             $('.row1, .row2, .row3').toggleClass('hide-main');
             if(overlay === '.a2') {
-                $('.fa-info-circle, .fa-sync').css('opacity', '1');
-                $('.fa-info-circle, .fa-sync').css('z-index', '1');
-                $('#convert-input, #convert-display').val("");
                 if(coinNum !== oldCoinNum) {
                     firstCall();
                     oldCoinNum = coinNum;
                     clickedValue = 'bitcoin';
                 }
+                $('.fa-info-circle, .fa-sync').css('opacity', '1');
+                $('.fa-info-circle, .fa-sync').css('z-index', '1');
+                $('#convert-input, #convert-display').val("");
             } else if(overlay === '.a3') {
                 $('.fa-cog, .fa-sync').css('opacity', '1');
                 $('.fa-cog, .fa-sync').css('z-index', '1');
