@@ -2,13 +2,14 @@
 * Requires and variables
 * ---------------------------------------*/
 
+// electron
 const request = require('request');
 const electron = require('electron');
 const shell = electron.shell;
 const {ipcRenderer} = electron;
 const {remote} = require('electron');
 let win = remote.getCurrentWindow();
-
+// application
 const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins/16x16/';
 const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/64x64/';
 const imgUrlEnd = '.png">';
@@ -23,18 +24,18 @@ let coinNum, oldCoinNum = 100;
 /*---------------------------------------
 * Start initial code/call funcs and reqs
 * ---------------------------------------*/
-// // wait for an updateReady message
-// ipcRenderer.on('updateReady', function(event, text) {
-//     $('.update-btn').css('visibility', 'visible');
-// });
+// wait for an updateReady message
+ipcRenderer.on('updateReady', function(event, text) {
+    $('.update-btn').css('visibility', 'visible');
+});
 
-// // when update ready and btn clicked, send a quitAndInstall message to main process
-// $('.update-btn').on('click', function() {
-//     ipcRenderer.send('quitAndInstall');
-// });
+// when update ready and btn clicked, send a quitAndInstall message to main process
+$('.update-btn').on('click', function() {
+    ipcRenderer.send('quitAndInstall');
+});
 
 // force resziable option off
-// win.setResizable(false);
+win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -73,7 +74,7 @@ $('#search-input').removeAttr('required');
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    // win.setSize(400, 626);
+    win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -182,7 +183,7 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                // win.setSize(400, 200);
+                win.setSize(400, 200);
             });
             x = true;
         } else {
@@ -217,7 +218,7 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        // win.setSize(400, 200);
+        win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -389,7 +390,7 @@ function setSearchCount() {
 // filter search 
 function searchList() {
     var search = $('#search-input').val().toUpperCase();
-    $('.search #row').each(function() {
+    $('.search .row').each(function() {
         text = $(this).text().toUpperCase();
         if(text.indexOf(search) > -1 || search == "") {
             $(this).css("display", "table-row");
@@ -470,13 +471,13 @@ function donate() {
 // clear #search-input val
 function clearSearch() {
     $('#search-input').val("");
-    $('.search #row').each(function() {
+    $('.search .row').each(function() {
         $(this).css("display", "table-row");
      });
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
-    // win.setSize(400, 200);
+    win.setSize(400, 200);
 }
 
 // show/hide placeholder text for search

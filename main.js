@@ -1,13 +1,56 @@
 const electron = require('electron')
 const {app, BrowserWindow, ipcMain} = electron
-const{autoUpdater} = require("electron-updater");
+const{autoUpdater} = require('electron-updater');
+const isDev = require('electron-is-dev');
 const path = require('path')
 const url = require('url')
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+
+// setup logger
+autoUpdater.logger = require('electron-log');
+autoUpdater.logger.transports.file.level = 'info';
+
+// setup updater events
+autoUpdater.on('checking-for-update', () => {
+  console.log('Checking for updates...');
+});
+
+autoUpdater.on('update-available', (info) => {
+  console.log('Update available!');
+  console.log('Version', info.version);
+  console.log('Release date', info.releaseDate);
+});
+
+autoUpdater.on('update-not-available', () => {
+  console.log('Update not available');
+});
+
+autoUpdater.on('download-progress', (progress) => {
+  console.log(`Progress ${Math.floor(progress.percent)}`);
+});
+
+// when the update has been downloaded and is ready to be installed, notify the BrowserWindow
+autoUpdater.on('update-downloaded', (info) => {
+  console.log('Update downloaded');
+  win.webContents.send('updateReady')
+});
+
+// when receiving a quitAndInstall signal, quit and install the new version ;)
+ipcMain.on("quitAndInstall", (event, arg) => {
+  autoUpdater.quitAndInstall();
+})
+
+// autoUpdater.on('update-downloaded', (info) => {
+//   console.log('Update downloaded');
+//   autoUpdater.quitAndInstall();
+// });
+
+autoUpdater.on('error', (error) => {
+  console.error(error);
+});
 
 function createWindow () {
   // Create the browser window.
@@ -35,10 +78,12 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-// Check for updates as well
 app.on('ready', () => {
   createWindow();
-  // autoUpdater.checkForUpdates();
+  // trigger update check
+  if(!isDev) {
+    autoUpdater.checkForUpdates();
+  }
 })
 
 // Quit when all windows are closed.
@@ -57,13 +102,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
-// autoUpdater.on('update-downloaded', (info) => {
-//   win.webContents.send('updateReady')
-// });
-
-// // when receiving a quitAndInstall signal, quit and install the new version ;)
-// ipcMain.on("quitAndInstall", (event, arg) => {
-//   autoUpdater.quitAndInstall();
-// })

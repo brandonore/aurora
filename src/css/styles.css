@@ -444,6 +444,7 @@ input:focus ~ span {
 .fa-sort-numeric-down {
   padding-right: 5px;
   font-size: 1.2em;
+  color: var(--colored-elements);
 }
 
 #convert-input, #convert-display, #coin-count {

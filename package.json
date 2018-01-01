@@ -10,8 +10,48 @@
   "build": {
     "appId": "com.electron.aurora",
     "productName": "aurora",
+    "publish": [
+      {
+        "provider": "github",
+        "repo": "aurora",
+        "owner": "brandonore"
+      }
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "identity": null,
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.finance"
+    },
+    "dmg": {
+      "background": "assets/background.tiff",
+      "icon": "assets/icon.icns",
+      "iconSize": 100,
+      "window": {
+        "width": 544,
+        "height": 408
+      },
+      "contents": [
+        {
+          "x": 145,
+          "y": 257
+        },
+        {
+          "x": 400,
+          "y": 255,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis",
+        "portable"
+      ],
       "icon": "assets/icon.ico"
     },
     "nsis": {
@@ -19,15 +59,20 @@
       "uninstallerIcon": "assets/icon.ico",
       "license": "LICENSE",
       "runAfterFinish": true
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
     }
   },
   "scripts": {
     "pack": "build --dir",
-    "dist": "build",
+    "dist": "build --arch all",
     "postinstall": "install-app-deps",
     "start": "electron ."
   },
   "dependencies": {
+    "electron-is-dev": "^0.3.0",
+    "electron-log": "^2.2.13",
     "electron-updater": "^2.17.6",
     "open": "0.0.5",
     "request": "^2.83.0"
