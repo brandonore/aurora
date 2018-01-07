@@ -20,6 +20,7 @@ let clickedValue = 'bitcoin';
 let currency = ' USD';
 let currencyBtc = ' BTC';
 let coinNum, oldCoinNum = 100;
+let toggleVal = false;
 
 /*---------------------------------------
 * Start initial code/call funcs and reqs
@@ -35,7 +36,7 @@ $('.update-btn').on('click', function() {
 });
 
 // force resziable option off
-win.setResizable(false);
+// win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -54,12 +55,12 @@ $('.fa-sync').on('click', function() {
 
 // toggle volume/supply on click
 $('.row2 p, .row2 span').on('click', function() {
-    toggleSupply();
+    toggleN('supply');
 });
 
 // toggle usd/btc on click 
 $('.coin-price, .coin-price-btc, .currency-small, .currency-small-btc, .percent-change, .percent-time').on('click', function() {
-    toggleBtcPrice();
+    toggleN('btcprice');
 });
 
 // search on key up
@@ -74,7 +75,7 @@ $('#search-input').removeAttr('required');
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
     $('.main-container').css('height', '626px');
-    win.setSize(400, 626);
+    // win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -101,6 +102,14 @@ $('#convert-input').focusout(function() {
     $(this).attr('placeholder');
 });
 
+// swap conversion
+$('.fa-arrows-alt-h').on('click', function() {
+    toggleN('convert');
+    $('#convert-input').val("");
+    $('#convert-display').text("");
+    $('#convert-input').focus();
+});
+
 // clear search
 $('.search-close').on('click', function() {
     clearSearch();  
@@ -119,7 +128,7 @@ errReBtns();
 showOverlays('.fa-cog', '.a2', 300);
 showOverlays('.fa-info-circle', '.a3', 300);
 donate();
-satoshiUSD();
+satoshiUSD('sat');
 setSearchCount();
 opacity();
 searchPlaceholder();
@@ -183,20 +192,21 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                win.setSize(400, 200);
+                // win.setSize(400, 200);
             });
             x = true;
         } else {
             $('.row1, .row2, .row3').toggleClass('hide-main');
             if(overlay === '.a2') {
                 if(coinNum !== oldCoinNum) {
-                    firstCall();
                     oldCoinNum = coinNum;
                     clickedValue = 'bitcoin';
+                    firstCall();
                 }
                 $('.fa-info-circle, .fa-sync').css('opacity', '1');
                 $('.fa-info-circle, .fa-sync').css('z-index', '1');
-                $('#convert-input, #convert-display').val("");
+                $('#convert-input').val("");
+                $('#convert-display').text("");
             } else if(overlay === '.a3') {
                 $('.fa-cog, .fa-sync').css('opacity', '1');
                 $('.fa-cog, .fa-sync').css('z-index', '1');
@@ -218,7 +228,7 @@ function errReOverlay(overlay, value, id) {
     }, 300, function() {
         $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        win.setSize(400, 200);
+        // win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -298,6 +308,7 @@ function mainInfo(arr) {
     fillMain();
 }
 
+// format large numbers to easier to read format
 function nFormat(curr, num) {
     if(Number(num) > 999999999) {
         return curr + (num/1000000000).toFixed(2) + 'B';
@@ -332,13 +343,19 @@ function fillMain() {
 }
 
 // toggle bewtween displaying volume/marketcap or avail/total supply on main
-function toggleSupply() {
-    $('.div-volume, .div-mcap, .div-asup, .div-tsup').toggleClass('hide');
-}
-
-// toggle between usd/btc price
-function toggleBtcPrice() {
-    $('.coin-price, .currency-small, .coin-price-btc, .currency-small-btc').toggleClass('hide');
+function toggleN(param) {
+    if(param === 'supply') {
+        $('.div-volume, .div-mcap, .div-asup, .div-tsup').toggleClass('hide');
+    } else if(param === 'btcprice') {
+        $('.coin-price, .currency-small, .coin-price-btc, .currency-small-btc').toggleClass('hide');
+    } else if(param === 'convert') {
+        $('.satoshi h3').toggleClass('hide');
+        if($('.conversion-title').hasClass('hide')) {
+            satoshiUSD('usd');
+        } else {
+            satoshiUSD('sat');
+        }
+    }  
 }
 
 // check 1h percent change and fill info/change color
@@ -400,8 +417,8 @@ function searchList() {
     });   
 }
 
-// convert satoshi to usd
-function satoshiUSD() {
+// convert satoshi -> usd & usd -> btc
+function satoshiUSD(val) {
     $('#convert-input').bind('input', function() {
         x = $('#convert-input').val().toString().replace(/\,/g,'');
         if(x >= 1000) {
@@ -411,18 +428,23 @@ function satoshiUSD() {
             $('#convert-input').val(y);
         }
         if(isNaN(x * 2)) {
-            $('#convert-display').val(0);
+            $('#convert-display').text(0);
             console.log('nan error');
         } else {
             $.get("http://api.coindesk.com/v1/bpi/currentprice.json", function(data) {
                 var body = JSON.parse(data);
-                var btcPrice = body.bpi.USD.rate.replace(/\,/g,'') * x;
-                var satUSD = (btcPrice * 0.00000001);
+                if(val === 'sat') {
+                    var btcPrice = x * body.bpi.USD.rate.replace(/\,/g,'');
+                    var satUSD = (btcPrice * .00000001);
+                } else if(val === 'usd') {
+                    var btcPrice = x / body.bpi.USD.rate.replace(/\,/g,'');
+                    var satUSD = btcPrice;
+                }
                 a = (satUSD).toFixed(8);
                 b = a.toString().split(".");
                 b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                 c = b.join('.');
-                $('#convert-display').val(c);
+                $('#convert-display').text(c);
             });
         }
     });
@@ -441,6 +463,7 @@ function opacity() {
     });
 }
 
+// reset opacity on theme change
 function resetOpacity(theme) {
     if(theme === 'dark') {
         $('.main-container').css("background", "rgba(67, 77, 90, " + $('#oSlider').val() + ")");
@@ -477,7 +500,7 @@ function clearSearch() {
      $('.search, .search-close').hide();
      $('.fa-compress').show();
      $('.main-container').css('height', '200px');
-    win.setSize(400, 200);
+    // win.setSize(400, 200);
 }
 
 // show/hide placeholder text for search

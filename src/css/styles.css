@@ -213,7 +213,7 @@ h2 {
   border-radius: 6px 6px 0 0;
 }
 
-.fa-minus, .mClose, .fa-arrow-to-bottom {
+.fa-minus, .mClose, .fa-arrow-to-bottom, .fa-arrows-alt-h {
   position: relative;
   font-size: 18px;
   cursor: pointer;
@@ -233,7 +233,7 @@ h2 {
   font-weight: 500;
 }
 
-.fa-cog:hover, .fa-info-circle:hover, .fa-sync:hover {
+.fa-cog:hover, .fa-info-circle:hover, .fa-sync:hover, .fa-arrows-alt-h:hover {
   font-weight: bold;
 }
 
@@ -252,6 +252,10 @@ h2 {
   margin-right: 6px;
   color: #03FABD;
   visibility: hidden;
+}
+
+.fa-arrows-alt-h {
+  color: #03FABD;
 }
 
 /* Search main */
@@ -417,9 +421,14 @@ input:focus ~ span {
 }
 
 #convert-input, #convert-display {
-  border-bottom: solid 1px var(--main-text);
   width: 70%;
   margin: 4px auto;
+}
+
+#convert-input {
+  border-bottom: solid 1px var(--main-text);
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 #coin-count {

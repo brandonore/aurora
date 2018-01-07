@@ -20,7 +20,7 @@
                 <i class="fal fa-cog" aria-hidden="true" title="Settings"></i>
                 <i class="fal fa-sync" aria-hidden="true" title="Reset the app if it appears frozen"></i>
                 <i class="fal fa-arrow-to-bottom update-btn" aria-hidden="true" title="Update ready!"></i>
-                <i class="fal fa-minus" aria-hidden="true" title="Minimize"></i>
+                <i class="fal fa-minus" aria-hidden="true"></i>
                 <i class="fal fa-times mClose" aria-hidden="true" title="Close"></i>
             </div>
         </div>
@@ -90,14 +90,15 @@
         <aside class="a2">
             <div class="section group">
                 <div class="col span_1_of_2 satoshi">
-                <h3>Satoshi to USD</h3>
+                <h3 class="conversion-title">Satoshi <i class="far fa-arrows-alt-h"></i> USD</h3>
+                <h3 class="hide">USD <i class="far fa-arrows-alt-h"></i> BTC</h3>
                 <input type="text" id="convert-input"><br>
-                <input type="text" id="convert-display">
+                <label id="convert-display"></label>
                 </div>
                 <div class="col span_1_of_2 theme switch">
                 <h3>Dark mode?</h3>
                 <input type="checkbox" id="switch1" class="switch-input" checked><label for="switch1" class="switch-label"></label>
-                <i class="fal fa-sort-numeric-down"></i> <input type="text" id="coin-count" placeholder="Set coin #">
+                <i class="fal fa-sort-numeric-down" title="Set the number of coins to display"></i> <input type="text" id="coin-count" placeholder="Set coin #">
                 </div>
             </div>
             <div class="section group slider-row">
