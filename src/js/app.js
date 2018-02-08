@@ -11,20 +11,21 @@ const {remote} = require('electron');
 let win = remote.getCurrentWindow();
 // application
 const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins/16x16/';
+const imgUrlMedium = '<img src="https://files.coinmarketcap.com/static/img/coins/32x32/';
 const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/64x64/';
 const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
 let popList, searchContainer = [];
 let rank, id, name, symbol, price, priceBtc, volume, mcap, perChange, per1h, availSup, totalSup, check, selectedCoin, btcPrice, text;
-let clickedValue = 'bitcoin';
+let clickedValue = 'Bitcoin';
 let currency = ' USD';
 let currencyBtc = ' BTC';
-let coinNum, oldCoinNum = 100;
-let toggleVal = false;
+let cMode = false;
 
 /*---------------------------------------
 * Start initial code/call funcs and reqs
 * ---------------------------------------*/
+
 // wait for an updateReady message
 ipcRenderer.on('updateReady', function(event, text) {
     $('.update-btn').css('visibility', 'visible');
@@ -36,7 +37,7 @@ $('.update-btn').on('click', function() {
 });
 
 // force resziable option off
-// win.setResizable(false);
+win.setResizable(false);
 
 // minimize, close, refresh app
 $('.fa-minus').on('click', function() {
@@ -74,8 +75,9 @@ $('#search-input').removeAttr('required');
 // show/hide .search list
 $('#search-input').focus(function() {
     $('.search, .search-close').show();
+    $('.compact-btn').hide();
     $('.main-container').css('height', '626px');
-    // win.setSize(400, 626);
+    win.setSize(400, 626);
 });
 
 // check theme switch, toggle dark/light mode
@@ -103,16 +105,28 @@ $('#convert-input').focusout(function() {
 });
 
 // swap conversion
-$('.fa-arrows-alt-h').on('click', function() {
+$('.fa-long-arrow-right').on('click', function() {
     toggleN('convert');
     $('#convert-input').val("");
-    $('#convert-display').text("");
+    $('#convert-display').text("0.00000000");
     $('#convert-input').focus();
 });
 
 // clear search
 $('.search-close').on('click', function() {
-    clearSearch();  
+    clearSearch();
+    $('.compact-btn').show();  
+});
+
+// compact mode
+$('.compact-btn').on('click', function() {
+    cMode = true;
+    compactMode();
+});
+
+$('.expand-btn').on('click', function() {
+    cMode = false;
+    compactMode();
 });
 
 // open about links in users default browser
@@ -121,18 +135,27 @@ $(document).on('click', 'a[href^="http"]', function(event) {
     shell.openExternal(this.href);
 });
 
+// open dev tools
+document.onkeyup = function(e) {
+    if(e.which == 17 && e.which == 16 && e.which == 73) {
+        win.webContents.openDevTools();
+    }
+}
+
 // call funcs
 firstCall(); 
-secondCall();
 errReBtns();
 showOverlays('.fa-cog', '.a2', 300);
 showOverlays('.fa-info-circle', '.a3', 300);
 donate();
 satoshiUSD('sat');
-setSearchCount();
+// setSearchCount();
 opacity();
 searchPlaceholder();
-dynamicHover();
+dynamicHover('a');
+dynamicHover('.fa-sync');
+dynamicHover('.expand-btn');
+dynamicHover('.compact-btn');
 
 /*---------------------------------------
 * Functions
@@ -140,15 +163,18 @@ dynamicHover();
 
 // make initial api call to fill out values
 function firstCall() {
-    request('https://api.coinmarketcap.com/v1/ticker/?limit=' + coinNum, (error, response, body) => {
+    request.get('https://api.coinmarketcap.com/v1/ticker/?limit=0', (error, response, body) => {
         if(!error && response.statusCode == 200) {
             popList = JSON.parse(body);
             populateData();
             mainInfo(popList);
-            btcPrice = price;
             getListValue();
+            btcPrice = price;
+            secondCall();
         } else {
         // show error overlay
+        cMode = false;
+        compactMode();
         $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
         $('.err-span').text(error);
         errReOverlay('.a1', 0);
@@ -156,22 +182,148 @@ function firstCall() {
     });
 }
 
-// start updating values every 3min
+// keep popList array updated every 3min
 function secondCall() {
     setInterval(() => {
-        request('https://api.coinmarketcap.com/v1/ticker/' + clickedValue + '/', (error, response, body) => {
+        request.get('https://api.coinmarketcap.com/v1/ticker/?limit=0', (error, response, body) => {
             if(!error && response.statusCode == 200) {
-                body = JSON.parse(body);
-                console.log(body);
-                mainInfo(body);
+                popList.length = 0;
+                try {
+                    popList = JSON.parse(body);
+                } catch(e) {
+                    console.log('Caught: ' + e.message);
+                }
+                console.log(typeof(popList));
+                populateData();
+                getListValue();
+                refreshMain();
+                console.log('end second call');
             } else {
                 // show error overlay
+                cMode = false;
+                compactMode();
                 $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
                 $('.err-span').text(error);
                 errReOverlay('.a1', 0);
             }
         });
-    }, 180000);
+    }, 90000);
+}
+
+// compact mode 
+function compactMode() {
+    if(!cMode) {
+        $('.row-menu, .row2, .row3').show();
+        $('.expand-btn').hide();
+        $('.logo-small, .cInfo-small').addClass('hide');
+        $('.logo-large, .cInfo-large').removeClass('hide');
+        $('.main-container').css({'height': '200', 'width': '400'});
+        $('.main-container').removeClass('drag');
+        $('.coin-picture').html(imgUrlLarge + id + imgUrlEnd);
+        $('.coin-name').html(name + ' ' + '(' + symbol + ')'); 
+    } else {
+        $('.row-menu, .row2, .row3').hide();
+        $('.expand-btn').show();
+        $('.logo-large, .cInfo-large').addClass('hide');
+        $('.logo-small, .cInfo-small').removeClass('hide');
+        $('.logo-small').css('padding-left', '5px');
+        $('.cInfo-small h2').css({'font-size': '1em', 'margin': '15px 0 0 0'});
+        $('.main-container').css({'height': '60', 'width': '320'});
+        $('.main-container').addClass('drag');
+        $('.coin-picture').html(imgUrlMedium + id + imgUrlEnd);
+        $('.coin-name').html(symbol);
+    }
+}
+
+// pull info for main screen
+function mainInfo(arr) {
+    assignCoinData(arr[0]);
+    fillMain();
+}
+
+// assign data to coin variables
+function assignCoinData(param) {
+    [name, id, symbol, price, rank, volume, mcap, perChange, per1h, availSup, totalSup, priceBtc] = [
+        param["name"], param["id"], param["symbol"], param["price_usd"],
+        param["rank"], nFormat('$', param["24h_volume_usd"]), nFormat('$', param["market_cap_usd"]), 
+        Math.sign(Number(param["percent_change_1h"])), param["percent_change_1h"], nFormat("", param["available_supply"]),
+        nFormat("", param["total_supply"]), param["price_btc"]
+    ];
+}
+
+// fill main screen
+function fillMain() {
+    $('.coin-picture, .coin-name, .coin-rank, .coin-volume, .coin-mcap, .currency-small, .currency-small-2').fadeOut('fast', function() {
+        if(!cMode) {
+            $('.coin-picture').html(imgUrlLarge + id + imgUrlEnd).fadeIn('fast');
+            $('.coin-name').html(name + ' ' + '(' + symbol + ')').fadeIn('fast');
+        } else {
+            $('.coin-picture').html(imgUrlMedium + id + imgUrlEnd).fadeIn('fast');
+            $('.coin-name').html(symbol).fadeIn('fast');
+        } 
+        $('.coin-rank').html(rank).fadeIn('fast');
+        $('.coin-mcap').html(mcap).fadeIn('fast');
+        $('.coin-volume').html(volume).fadeIn('fast');
+        $('.currency-small').text(currency).fadeIn('fast');
+        $('.currency-small-2').text(currency).fadeIn('fast');
+        $('.currency-small-btc').text(currencyBtc).fadeIn('fast'); 
+        $('.coin-asup').html(availSup).fadeIn('fast');
+        $('.coin-tsup').html(totalSup).fadeIn('fast'); 
+        $('.symbol-small').text(' ' + symbol).fadeIn('fast');
+    });
+    fillPricePercent(1, '#25DAA5');
+    fillPricePercent(-1, 'rgb(245, 56, 103)'); 
+    fillPricePercent(0, 'rgba(255, 255, 255, 0.75)');
+    console.log(perChange);
+}
+
+// populate search list
+function populateData() {
+    $('.search-table').empty();
+    for(var i = 0; i < popList.length; i++) {
+        rank = popList[i]["rank"];
+        id = popList[i]["id"];
+        name = popList[i]["name"];
+        symbol = popList[i]["symbol"];
+        generateDiv();
+    }
+}
+
+// generate div for search list
+function generateDiv() {
+    $('.search-table').append('<tr class="row"><td class="list-rank">' + rank + '</td><td class="list-image">' + imgUrlSmall + id + imgUrlEnd + '</td><td class="listDiv"><a href="#">' + 
+    name + '</a> (' + symbol + ')</td></tr>');
+}
+
+// get clicked value from list and call refresh
+function getListValue() {
+    $(".search a").on("click", (el) => {
+        clickedValue = $(el.target).text();
+        console.log(clickedValue);
+        refreshMain();
+        clearSearch();
+        $('.compact-btn').show();           
+    });
+}
+
+// update main screen from list click
+function refreshMain() {
+    let obj = searchArr(clickedValue, popList);
+    assignCoinData(obj);
+    fillMain();
+}
+
+// check 1h percent change and fill info/change color
+function fillPricePercent(change, color) {
+    if(perChange === change) {
+        $('.coin-price, .coin-price-btc, .percent-change, .percent-time').fadeOut('fast', function() {
+            $('.coin-price').text('$' + price).fadeIn('fast');
+            $('.coin-price-btc').text(priceBtc).fadeIn('fast');
+            $('.percent-change').text('(' + per1h + '%)').fadeIn('fast');
+            $('.percent-time').text('1hr').fadeIn('fast');
+            $('.coin-price, .coin-price-btc, .percent-change').css('color', color);
+        });     
+    }   
 }
 
 // handle overlays for settings/about
@@ -192,21 +344,16 @@ function showOverlays(icon, overlay, speed) {
                 left: 0
             }, speed, function() {
                 $('.main-container').css('height', '200px');
-                // win.setSize(400, 200);
+                win.setSize(400, 200);
             });
             x = true;
         } else {
             $('.row1, .row2, .row3').toggleClass('hide-main');
             if(overlay === '.a2') {
-                if(coinNum !== oldCoinNum) {
-                    oldCoinNum = coinNum;
-                    clickedValue = 'bitcoin';
-                    firstCall();
-                }
                 $('.fa-info-circle, .fa-sync').css('opacity', '1');
                 $('.fa-info-circle, .fa-sync').css('z-index', '1');
                 $('#convert-input').val("");
-                $('#convert-display').text("");
+                $('#convert-display').text("0.00000000");
             } else if(overlay === '.a3') {
                 $('.fa-cog, .fa-sync').css('opacity', '1');
                 $('.fa-cog, .fa-sync').css('z-index', '1');
@@ -223,12 +370,12 @@ function showOverlays(icon, overlay, speed) {
 
 // show/hide error/refresh overlay
 function errReOverlay(overlay, value, id) {
+    $('.row1, .row2, .row3').toggleClass('hide-main');
     $(overlay).stop().animate({
         left: value
     }, 300, function() {
-        $('.row1, .row2, .row3').toggleClass('hide-main');
         $('.main-container').css('height', '200px');
-        // win.setSize(400, 200);
+        win.setSize(400, 200);
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
@@ -257,18 +404,6 @@ function errReBtns() {
     });
 }
 
-// get clicked value from list and call refresh
-function getListValue() {
-    $(".search a").on("click", (el) => {
-        clickedValue = $(el.target).text();
-        console.log(clickedValue);
-        // update 'clickedValue' with proper id
-        let obj = searchArr(clickedValue, popList);
-        clickedValue = obj.id;
-        refreshMain();           
-    });
-}
-
 // search coins based on clicked value and return coin obj
 function searchArr(val, arr) {
     for(var i = 0; i < arr.length; i++) {
@@ -276,36 +411,6 @@ function searchArr(val, arr) {
             return arr[i];
         }
     }
-}
-
-// update main screen from list click
-function refreshMain() {
-    request('https://api.coinmarketcap.com/v1/ticker/' + clickedValue + '/', (error, response, body) => {
-        if(!error && response.statusCode == 200) {
-            body = JSON.parse(body);
-            console.log(body);
-            mainInfo(body);
-            $('.search, .search-close').hide();
-            $('.main-container').css('height', '200px');
-            clearSearch();
-        } else {
-            // show error overlay
-            $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
-            $('.err-span').text(error);
-            errReOverlay('.a1', 0);
-        }
-    });
-}
-
-// pull info for main screen
-function mainInfo(arr) {
-    [name, id, symbol, price, rank, volume, mcap, perChange, per1h, availSup, totalSup, priceBtc] = [
-        arr[0]["name"], arr[0]["id"], arr[0]["symbol"], arr[0]["price_usd"],
-        arr[0]["rank"], nFormat('$', arr[0]["24h_volume_usd"]), nFormat('$', arr[0]["market_cap_usd"]), 
-        Math.sign(Number(arr[0]["percent_change_1h"])), arr[0]["percent_change_1h"], nFormat("", arr[0]["available_supply"]),
-        nFormat("", arr[0]["total_supply"]), arr[0]["price_btc"]
-    ];
-    fillMain();
 }
 
 // format large numbers to easier to read format
@@ -319,27 +424,6 @@ function nFormat(curr, num) {
     } else {
         return num;
     }
-}
-
-// fill main screen
-function fillMain() {
-    $('.coin-picture, .coin-name, .coin-rank, .coin-volume, .coin-mcap, .currency-small, .currency-small-2').fadeOut('fast', function() {
-        $('.coin-picture').html(imgUrlLarge + id + imgUrlEnd).fadeIn('fast');
-        $('.coin-name').html(name + ' ' + '(' + symbol + ')').fadeIn('fast');
-        $('.coin-rank').html(rank).fadeIn('fast');
-        $('.coin-mcap').html(mcap).fadeIn('fast');
-        $('.coin-volume').html(volume).fadeIn('fast');
-        $('.currency-small').text(currency).fadeIn('fast');
-        $('.currency-small-2').text(currency).fadeIn('fast');
-        $('.currency-small-btc').text(currencyBtc).fadeIn('fast'); 
-        $('.coin-asup').html(availSup).fadeIn('fast');
-        $('.coin-tsup').html(totalSup).fadeIn('fast'); 
-        $('.symbol-small').text(' ' + symbol).fadeIn('fast');
-    });
-    fillPricePercent(1, '#25DAA5');
-    fillPricePercent(-1, 'rgb(245, 56, 103)'); 
-    fillPricePercent(0, 'rgba(255, 255, 255, 0.75)');
-    console.log(perChange);
 }
 
 // toggle bewtween displaying volume/marketcap or avail/total supply on main
@@ -356,37 +440,6 @@ function toggleN(param) {
             satoshiUSD('sat');
         }
     }  
-}
-
-// check 1h percent change and fill info/change color
-function fillPricePercent(change, color) {
-    if(perChange === change) {
-        $('.coin-price, .coin-price-btc, .percent-change, .percent-time').fadeOut('fast', function() {
-            $('.coin-price').text('$' + price).fadeIn('fast');
-            $('.coin-price-btc').text(priceBtc).fadeIn('fast');
-            $('.percent-change').text('(' + per1h + '%)').fadeIn('fast');
-            $('.percent-time').text('1hr').fadeIn('fast');
-            $('.coin-price, .coin-price-btc, .percent-change').css('color', color);
-        });     
-    }   
-}
-
-// populate search list
-function populateData() {
-    $('.search-table').empty();
-    for(var i = 0; i < popList.length; i++) {
-        rank = popList[i]["rank"];
-        id = popList[i]["id"];
-        name = popList[i]["name"];
-        symbol = popList[i]["symbol"];
-        generateDiv();
-    }
-}
-
-// generate div for search list
-function generateDiv() {
-    $('.search-table').append('<tr class="row"><td class="list-rank">' + rank + '</td><td class="list-image">' + imgUrlSmall + id + imgUrlEnd + '</td><td class="listDiv"><a href="#">' + 
-    name + '</a> (' + symbol + ')</td></tr>');
 }
 
 // check input value and update coinNum value
@@ -454,11 +507,9 @@ function satoshiUSD(val) {
 function opacity() {
     oSlider.on('input', function() {
         if($('body').hasClass('dark-mode')) {
-            $('.main-container').css("background", "rgba(67, 77, 90, " + $(this).val() + ")");
-            $('.menu, .a2, .a3').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
+            $('.main-container').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
         } else if($('body').hasClass('light-mode')) {
-            $('.main-container').css("background", "rgba(216, 225, 232, " + $(this).val() + ")");
-            $('.menu, .a2, .a3').css("background", "rgba(126, 140, 159, " + $(this).val() + ")");
+            $('.main-container').css("background", "rgba(255, 255, 255, " + $(this).val() + ")");
         }
     });
 }
@@ -466,11 +517,9 @@ function opacity() {
 // reset opacity on theme change
 function resetOpacity(theme) {
     if(theme === 'dark') {
-        $('.main-container').css("background", "rgba(67, 77, 90, " + $('#oSlider').val() + ")");
-        $('.menu, .a2, .a3').css("background", "rgba(38, 44, 51, " + $('#oSlider').val() + ")");
+        $('.main-container').css("background", "rgba(38, 44, 51, " + $('#oSlider').val() + ")");
     } else if(theme === 'light') {
-        $('.main-container').css("background", "rgba(216, 225, 232, " + $('#oSlider').val() + ")");
-        $('.menu, .a2, .a3').css("background", "rgba(126, 140, 159, " + $('#oSlider').val() + ")");
+        $('.main-container').css("background", "rgba(255, 255, 255, " + $('#oSlider').val() + ")");
     }   
 }
 
@@ -514,12 +563,12 @@ function searchPlaceholder() {
     });
 }
 
-// prevent hover getting stuck on search list
-function dynamicHover() {
-    $(document).on('mouseenter', 'a', function() {
+// prevent hover getting stuck
+function dynamicHover(param) {
+    $(document).on('mouseenter', param, function() {
         $(this).css('font-weight', '600');
     });
-    $(document).on('mouseleave', 'a', function() {
+    $(document).on('mouseleave', param, function() {
         $(this).css('font-weight', '200');
     });
 }

@@ -17,6 +17,36 @@
         "owner": "brandonore"
       }
     ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "identity": null,
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.finance"
+    },
+    "dmg": {
+      "background": "assets/dmgBackground.tiff",
+      "icon": "assets/whiteicon.icns",
+      "iconSize": 100,
+      "window": {
+        "width": 512,
+        "height": 320
+      },
+      "contents": [
+        {
+          "x": 145,
+          "y": 257
+        },
+        {
+          "x": 400,
+          "y": 255,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
     "win": {
       "target": [
         "nsis",
@@ -42,13 +72,13 @@
   },
   "dependencies": {
     "electron-is-dev": "^0.3.0",
-    "electron-log": "^2.2.13",
-    "electron-updater": "^2.18.0",
+    "electron-log": "^2.2.14",
+    "electron-updater": "^2.20.2",
     "open": "0.0.5",
     "request": "^2.83.0"
   },
   "devDependencies": {
     "electron": "1.7.10",
-    "electron-builder": "^19.50.0"
+    "electron-builder": "^19.56.2"
   }
 }

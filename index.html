@@ -27,8 +27,9 @@
 
         <!-- Row1 -->
         <div class="section group row1">
-            <div class="col span_4_of_12 logo"><span class="coin-picture"></span></div>
-            <div class="col span_8_of_12 coin-info">
+            <div class="col span_4_of_12 logo logo-large"><span class="coin-picture"></span></div>
+            <div class="col span_2_of_12 logo logo-small hide"><span class="coin-picture"></span></div>
+            <div class="col span_8_of_12 coin-info cInfo-large">
                 <h2><span class="coin-name"></span></h2>
                 <span class="coin-price"></span>
                 <span class="coin-price-btc hide"></span>
@@ -37,6 +38,16 @@
                 <span class="percent-change"></span>
                 <span class="percent-time"></span>
             </div>
+            <div class="col span_9_of_12 coin-info cInfo-small hide">
+                <h2><span class="coin-name"></span></h2>
+                <span class="coin-price"></span>
+                <span class="coin-price-btc hide"></span>
+                <span class="currency-small"></span>
+                <span class="currency-small-btc hide"></span>
+                <span class="percent-change"></span>
+                <span class="percent-time"></span>
+            </div>
+            <i class="fal fa-expand-alt expand-btn"></i>
         </div>
 
         <!-- Row2 -->
@@ -55,6 +66,7 @@
                 <label class="search-label">Search...</label>
                 <span></span>
                 <i class="far fa-times-circle search-close" aria-hidden="true" title="Close search"></i>
+                <i class="fal fa-compress-alt compact-btn" aria-hidden="true"></i>
             </div>
             <div class="search section group">
                 <table class="search-table"></table>
@@ -67,7 +79,7 @@
                 <div class="col_span_2_of_2 error">
                     <span><h3>Network error! <i class="far fa-exclamation-circle"></i></h3></span>
                     <span class="err-span"></span>
-                    <p><span class="err-msg">Please check your internet connection and refresh/restart the app.</span></p>
+                    <p><span class="err-msg">Please check your internet connection and press ok to restart.</span></p>
                     <button id="err-btn">OK</button>
                 </div>
             </div>
@@ -78,7 +90,7 @@
             <div class="section group">
                 <div class="col_span_2_of_2 refresh">
                     <span><h3>Warning! <i class="far fa-exclamation-circle"></i></h3></span>
-                    <p><span class="refresh-msg">This application auto-syncs every 3 minutes. Please refrain from spamming the refresh button 
+                    <p><span class="refresh-msg">This application auto-syncs every 90 seconds. Please refrain from spamming the refresh button 
                         and only use if the app appears to be frozen. Thank you :)</span></p>
                     <button id="refresh-btn">Refresh!</button>
                     <button id="back-btn">Go back</button>
@@ -88,17 +100,16 @@
 
         <!-- Settings overlay -->
         <aside class="a2">
-            <div class="section group">
+            <div class="section group settings-row">
                 <div class="col span_1_of_2 satoshi">
-                <h3 class="conversion-title">Satoshi <i class="far fa-arrows-alt-h"></i> USD</h3>
-                <h3 class="hide">USD <i class="far fa-arrows-alt-h"></i> BTC</h3>
+                <h3 class="conversion-title">Satoshi <i class="fal fa-long-arrow-right"></i> USD</h3>
+                <h3 class="hide">USD <i class="fal fa-long-arrow-right"></i> BTC</h3>
                 <input type="text" id="convert-input"><br>
-                <label id="convert-display"></label>
+                <label id="convert-display">0.00000000</label>
                 </div>
                 <div class="col span_1_of_2 theme switch">
                 <h3>Dark mode?</h3>
                 <input type="checkbox" id="switch1" class="switch-input" checked><label for="switch1" class="switch-label"></label>
-                <i class="fal fa-sort-numeric-down" title="Set the number of coins to display"></i> <input type="text" id="coin-count" placeholder="Set coin #">
                 </div>
             </div>
             <div class="section group slider-row">

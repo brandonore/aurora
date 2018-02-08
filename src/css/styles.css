@@ -7,7 +7,7 @@
 }
 
 .light-mode {
-  --menu-bar: #7E8C9F;
+  --menu-bar: rgb(255, 255, 255);
   --main-background: rgba(216, 225, 232, 1);
   --main-text: rgba(38, 44, 51, 1);
   --colored-elements: #785EDD;
@@ -37,15 +37,10 @@ h3 {
 .main-container {
   height: 200px;
   width: 400px;
-  background: var(--main-background);
-  border-radius: 6px;
+  background: var(--menu-bar);
+  /* border-radius: 6px; */
   color: var(--main-text);
   font-family: 'Montserrat', sans-serif;
-}
-
-.main-compact {
-  height: 150px;
-  width: 150px;
 }
 
 i {
@@ -135,21 +130,59 @@ a:link, a:visited {
   transition: opacity .1s ease-in-out;
 }
 
+.row1 {
+  height: 90px;
+}
+
+.row2 {
+  margin-bottom: 4px;
+  height: 46px;
+}
+
+.row2 p {
+  margin: 0;
+  font-weight: 200;
+  font-size: 1em;
+}
+
+.row3 {
+  height: 32px;
+}
+
 .logo {
   text-align: center;
   padding-top: 8px;
 }
 
 h2 {
-  margin: 20px 0 0 0;
+  margin: 22px 0 0 0;
   font-weight: 200;
   font-size: 1.3em;
+}
+
+.expand-btn {
+  display: none;
+  position: absolute;
+  top: 37px;
+  left: 298px;
+  font-size: 14px;
+  z-index: 3;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+
+.expand-btn, .compact-btn {
+  transform: scaleX(-1);
 }
 
 .coin-price, .percent-change, .coin-price-btc {
   font-weight: 500;
   font-size: 1em;
   color: var(--main-text);
+}
+
+.coin-price, .coin-price-btc, .currency-small, .currency-small-btc, .percent-change, .percent-time {
+  -webkit-app-region: no-drag;
 }
 
 .currency-small, .currency-small-2, .percent-time, .symbol-small, .currency-small-btc {
@@ -164,20 +197,6 @@ h2 {
 .settings {
   padding-top: 20px;
   text-align: right;
-}
-
-.row1 {
-  height: 84px;
-}
-
-.row2 {
-  margin-bottom: 11px;
-}
-
-.row2 p {
-  margin: 0;
-  font-weight: 200;
-  font-size: 1em;
 }
 
 .coin-rank, .coin-mcap, .coin-volume, .coin-asup, .coin-tsup {
@@ -208,12 +227,10 @@ h2 {
 .menu {
   margin: 0 auto;
   text-align: right;
-  background: var(--menu-bar);
   padding: 5px 0;
-  border-radius: 6px 6px 0 0;
 }
 
-.fa-minus, .mClose, .fa-arrow-to-bottom, .fa-arrows-alt-h {
+.fa-minus, .mClose, .fa-arrow-to-bottom, .fa-long-arrow-right {
   position: relative;
   font-size: 18px;
   cursor: pointer;
@@ -233,7 +250,7 @@ h2 {
   font-weight: 500;
 }
 
-.fa-cog:hover, .fa-info-circle:hover, .fa-sync:hover, .fa-arrows-alt-h:hover {
+.fa-cog:hover, .fa-info-circle:hover, .fa-sync:hover, .fa-long-arrow-right:hover {
   font-weight: bold;
 }
 
@@ -254,8 +271,8 @@ h2 {
   visibility: hidden;
 }
 
-.fa-arrows-alt-h {
-  color: #03FABD;
+.fa-long-arrow-right {
+  color: var(--colored-elements);
 }
 
 /* Search main */
@@ -271,7 +288,7 @@ h2 {
 	height: 170px;
 	top: 30px;
 	left: -401px;
-  background: var(--menu-bar);
+  /* background: var(--menu-bar); */
 	z-index: 2;
 	opacity: 1;
   border-radius: 0 0 6px 6px;
@@ -385,8 +402,8 @@ input:focus ~ span {
 #back-btn, #back-btn:visited, #back-btn:focus {
   outline: 0;
   border: 1px solid var(--main-text);
-  background: var(--menu-bar);
   color: var(--main-text);
+  background: transparent;
   text-align: center;
   padding: 4px 40px;
   font-size: .9em;
@@ -418,6 +435,10 @@ input:focus ~ span {
   text-align: center;
   margin-bottom: 16px;
   margin-top: -4px;
+}
+
+.settings-row {
+  height: 110px;
 }
 
 #convert-input, #convert-display {
@@ -494,9 +515,9 @@ input:focus ~ span {
 }
 
 .switch-label:before {
-  margin-top: 4px;
+  margin-top: 9px;
   width: 27%;
-  height: 21%;
+  height: 28%;
   left: 76px;
   background-color: var(--main-background);
   border-radius: 9999em;
@@ -504,7 +525,7 @@ input:focus ~ span {
 }
 
 .switch-label:after {
-  top: 42px;
+  top: 47px;
   left: 78px;
   width: 18px;
   height: 18px;
@@ -630,19 +651,22 @@ input[type=range]:focus {
   font-weight: 600;
 }
 
-.search-close {
-  display: none;
+.search-close, .compact-btn {
   position: absolute;
   top: 175px;
   left: 376px;
   font-size: 18px;
-  color: var(--colored-elements);
   z-index: 3;
   cursor: pointer;
   transition: all .1s ease-in-out;
 }
 
-.search-close:hover {
+.search-close {
+  display: none;
+  color: var(--colored-elements);
+}
+
+.search-close:hover, .compact-btn:hover, .expand-btn:hover {
   font-weight: 600;
 }
 
