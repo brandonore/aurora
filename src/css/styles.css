@@ -379,11 +379,7 @@ input:focus ~ span {
   font-size: .9em;
 }
 
-.error p {
-  margin: 6px auto;
-}
-
-.refresh p {
+.error p, .refresh p {
   margin: 6px 22px;
 }
 

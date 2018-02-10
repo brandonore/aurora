@@ -175,6 +175,7 @@ function firstCall() {
         // show error overlay
         cMode = false;
         compactMode();
+        clearSearch();
         $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
         $('.err-span').text(error);
         errReOverlay('.a1', 0);
@@ -193,15 +194,15 @@ function secondCall() {
                 } catch(e) {
                     console.log('Caught: ' + e.message);
                 }
-                console.log(typeof(popList));
                 populateData();
                 getListValue();
                 refreshMain();
-                console.log('end second call');
+                console.log('Completed: [secondCall()]');
             } else {
                 // show error overlay
                 cMode = false;
                 compactMode();
+                clearSearch();
                 $('.fa-sync, .fa-cog, .fa-info-circle').css('display', 'none');
                 $('.err-span').text(error);
                 errReOverlay('.a1', 0);
@@ -217,7 +218,8 @@ function compactMode() {
         $('.expand-btn').hide();
         $('.logo-small, .cInfo-small').addClass('hide');
         $('.logo-large, .cInfo-large').removeClass('hide');
-        $('.main-container').css({'height': '200', 'width': '400'});
+        $('.main-container').css({'width': '400', 'height': '200'});
+        win.setSize(400,200);
         $('.main-container').removeClass('drag');
         $('.coin-picture').html(imgUrlLarge + id + imgUrlEnd);
         $('.coin-name').html(name + ' ' + '(' + symbol + ')'); 
@@ -228,7 +230,8 @@ function compactMode() {
         $('.logo-small, .cInfo-small').removeClass('hide');
         $('.logo-small').css('padding-left', '5px');
         $('.cInfo-small h2').css({'font-size': '1em', 'margin': '15px 0 0 0'});
-        $('.main-container').css({'height': '60', 'width': '320'});
+        $('.main-container').css({'width': '320', 'height': '60' });
+        win.setSize(320, 60);
         $('.main-container').addClass('drag');
         $('.coin-picture').html(imgUrlMedium + id + imgUrlEnd);
         $('.coin-name').html(symbol);
@@ -274,7 +277,6 @@ function fillMain() {
     fillPricePercent(1, '#25DAA5');
     fillPricePercent(-1, 'rgb(245, 56, 103)'); 
     fillPricePercent(0, 'rgba(255, 255, 255, 0.75)');
-    console.log(perChange);
 }
 
 // populate search list
@@ -299,7 +301,7 @@ function generateDiv() {
 function getListValue() {
     $(".search a").on("click", (el) => {
         clickedValue = $(el.target).text();
-        console.log(clickedValue);
+        console.log('Selected value: ' + '[' + clickedValue + ']');
         refreshMain();
         clearSearch();
         $('.compact-btn').show();           

@@ -28,7 +28,7 @@
     },
     "dmg": {
       "background": "assets/dmgBackground.tiff",
-      "icon": "assets/whiteicon.icns",
+      "icon": "assets/icon.icns",
       "iconSize": 100,
       "window": {
         "width": 512,
@@ -36,12 +36,12 @@
       },
       "contents": [
         {
-          "x": 145,
-          "y": 257
+          "x": 115,
+          "y": 183
         },
         {
-          "x": 400,
-          "y": 255,
+          "x": 397,
+          "y": 183,
           "type": "link",
           "path": "/Applications"
         }
