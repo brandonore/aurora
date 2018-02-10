@@ -135,13 +135,6 @@ $(document).on('click', 'a[href^="http"]', function(event) {
     shell.openExternal(this.href);
 });
 
-// open dev tools
-document.onkeyup = function(e) {
-    if(e.which == 17 && e.which == 16 && e.which == 73) {
-        win.webContents.openDevTools();
-    }
-}
-
 // call funcs
 firstCall(); 
 errReBtns();
@@ -149,7 +142,6 @@ showOverlays('.fa-cog', '.a2', 300);
 showOverlays('.fa-info-circle', '.a3', 300);
 donate();
 satoshiUSD('sat');
-// setSearchCount();
 opacity();
 searchPlaceholder();
 dynamicHover('a');
@@ -442,21 +434,6 @@ function toggleN(param) {
             satoshiUSD('sat');
         }
     }  
-}
-
-// check input value and update coinNum value
-function setSearchCount() {
-    $('#coin-count').bind('input', function() {
-        x = parseInt($('#coin-count').val().replace(/\,/g,''));
-        if(isNaN(x * 2) || x <= 0) {
-            console.log('nan error');
-            coinNum = 100;
-        } else if(x >= 1) {
-            coinNum = x;
-            console.log(coinNum);
-            console.log(typeof(coinNum));
-        }
-    });
 }
 
 // filter search 

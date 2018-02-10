@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {app, BrowserWindow, ipcMain} = electron
+const {app, BrowserWindow, ipcMain, globalShortcut} = electron
 const{autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const path = require('path');
@@ -79,10 +79,16 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createWindow();
+
   // trigger update check
   if(!isDev) {
     autoUpdater.checkForUpdates();
   }
+  
+  // global keyboard shortcut to open dev tools
+  const ret = globalShortcut.register('CommandOrControl+Shift+I', () => {
+    win.webContents.openDevTools({mode: 'undocked'});
+  });
 })
 
 // Quit when all windows are closed.
@@ -93,6 +99,11 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+// unregister global shortcut
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
