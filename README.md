@@ -23,29 +23,31 @@
 
 ## Features
 
-* Auto-syncs every 3 minutes
+* Auto-syncs every 90 seconds
 * Pulls data from <a href="https://coinmarketcap.com">CoinMarketCap</a>
   - Select any of the 1300+ coins they support from an interactive drop-down list
 * Filter/search to help you find your favorite coins  
-* Main screen displays coin logo, rank, price (USD), percent change (1h), volume (24h), market cap
-  - Click coin price to toggle price between USD and BTC
-  - Click volume/market cap to toggle bewtween available and total supply
-* Settings include built-in Satoshi to USD converter that updates in real time based on the current price of BTC
-* Dark/Light mode
-* Opacity slider
-* Refresh button (please avoid spamming this, only use if the app appears frozen)
+* Click to toggle display between USD/BTC price and volume & mcap/avail & total supply
+* Settings include Satoshi -> USD and USD -> BTC converter that updates in real time
+* Dark/Light mode, Opacity slider
 * Cross platform
-  - Windows and macOS. Linux coming soon!
+  - Windows and macOS
+* [NEW!] Auto-updates. App will check for new versions on start and display a download icon in the top right corner. Click this to update and restart to the newest version
+* [NEW!] Compact mode (based on binance desktop app)
 
 ## To-do List/Feature Request
 
-* Auto-updates (In-progress)
+* ~~Auto-updates (In-progress)~~ &#10003;
+* ~~Compact mode~~ &#10003;
 * Highlight/scroll through coin list with arrow keys, 'enter' to select highlighted option
-* Compact mode
+
   
 ## Download
 
-You can [download](https://github.com/brandonore/aurora/releases/tag/v1.0.0) the latest compiled version of aurora for Windows and macOS
+You can download the latest compiled version of aurora for Windows and macOS below, or visit the [releases](https://github.com/brandonore/aurora/releases) page!
+
+[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/windows-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.0/aurora.Setup.1.0.0.exe) &nbsp; &nbsp;
+[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/apple-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.0/aurora-1.0.0.dmg)
 
 ## How to Contribute
 
