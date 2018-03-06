@@ -1,6 +1,6 @@
 {
   "name": "aurora",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Real time updates on your favorite cryptocurrencies!",
   "main": "main.js",
   "author": "Brandon Ore",

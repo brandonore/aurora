@@ -7,7 +7,7 @@
 }
 
 .light-mode {
-  --menu-bar: rgb(255, 255, 255);
+  --menu-bar:rgb(206, 214, 224);
   --main-background: rgba(216, 225, 232, 1);
   --main-text: rgba(38, 44, 51, 1);
   --colored-elements: #785EDD;
@@ -364,6 +364,10 @@ input:focus ~ span {
   text-align: center;
 }
 
+.error {
+  background: rgb(38, 44, 51);
+}
+
 .error h3, .refresh h3 {
   font-weight: 400;
   margin-bottom: 6px;
@@ -435,6 +439,11 @@ input:focus ~ span {
 
 .settings-row {
   height: 110px;
+}
+
+.devtools {
+  margin: 0;
+  font-size: .9em;
 }
 
 #convert-input, #convert-display {
@@ -515,7 +524,7 @@ input:focus ~ span {
   width: 27%;
   height: 28%;
   left: 76px;
-  background-color: var(--main-background);
+  background-color: var(--colored-elements);
   border-radius: 9999em;
   transition: background-color 0.25s ease; 
 }

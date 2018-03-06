@@ -10,9 +10,9 @@ const {ipcRenderer} = electron;
 const {remote} = require('electron');
 let win = remote.getCurrentWindow();
 // application
-const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins/16x16/';
-const imgUrlMedium = '<img src="https://files.coinmarketcap.com/static/img/coins/32x32/';
-const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins/64x64/';
+const imgUrlSmall = '<img src="https://files.coinmarketcap.com/static/img/coins_legacy/16x16/';
+const imgUrlMedium = '<img src="https://files.coinmarketcap.com/static/img/coins_legacy/32x32/';
+const imgUrlLarge = '<img src="https://files.coinmarketcap.com/static/img/coins_legacy/64x64/';
 const imgUrlEnd = '.png">';
 const oSlider = $('#oSlider');
 let popList, searchContainer = [];
@@ -364,7 +364,7 @@ function showOverlays(icon, overlay, speed) {
 
 // show/hide error/refresh overlay
 function errReOverlay(overlay, value, id) {
-    $('.row1, .row2, .row3').toggleClass('hide-main');
+    $('.row1, .row2, .row3').toggleClass('hide');
     $(overlay).stop().animate({
         left: value
     }, 300, function() {
@@ -373,6 +373,7 @@ function errReOverlay(overlay, value, id) {
         clearSearch();
         if(overlay === '.a1' && value === -401) {
             $('.err-span').text("");
+            $('.row1, .row2, .row3').hide();
             win.reload();
         } else if(overlay === '.a4' && value === -401 && id === 'refresh-btn') {
             win.reload();
@@ -488,7 +489,7 @@ function opacity() {
         if($('body').hasClass('dark-mode')) {
             $('.main-container').css("background", "rgba(38, 44, 51, " + $(this).val() + ")");
         } else if($('body').hasClass('light-mode')) {
-            $('.main-container').css("background", "rgba(255, 255, 255, " + $(this).val() + ")");
+            $('.main-container').css("background", "rgba(206, 214, 224, " + $(this).val() + ")");
         }
     });
 }
@@ -498,7 +499,7 @@ function resetOpacity(theme) {
     if(theme === 'dark') {
         $('.main-container').css("background", "rgba(38, 44, 51, " + $('#oSlider').val() + ")");
     } else if(theme === 'light') {
-        $('.main-container').css("background", "rgba(255, 255, 255, " + $('#oSlider').val() + ")");
+        $('.main-container').css("background", "rgba(206, 214, 224, " + $('#oSlider').val() + ")");
     }   
 }
 
