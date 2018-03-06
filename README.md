@@ -41,13 +41,18 @@
 * ~~Compact mode~~ &#10003;
 * Highlight/scroll through coin list with arrow keys, 'enter' to select highlighted option
 
+## Known Issues
+
+* A small number of coins currently have broken image links. Waiting on Coinmarketcap to fix these
+* Graphical glitch on macOS when lowering the opacity. Ghosting of hidden elements showing through. (Could be caused by a gpu rendering error on my test machine)
+* Auto-updates are currently disabled for macOS until I sign the app through xcode
   
 ## Download
 
 You can download the latest compiled version of aurora for Windows and macOS below, or visit the [releases](https://github.com/brandonore/aurora/releases) page!
 
-[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/windows-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.0/aurora.Setup.1.0.0.exe) &nbsp; &nbsp;
-[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/apple-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.0/aurora-1.0.0.dmg)
+[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/windows-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.1/aurora-Setup-1.0.1.exe) &nbsp; &nbsp;
+[![Alt Text](https://github.com/brandonore/aurora/blob/master/assets/apple-small.png)](https://github.com/brandonore/aurora/releases/download/v1.0.1/aurora-1.0.1-mac.zip)
 
 ## How to Contribute
 
